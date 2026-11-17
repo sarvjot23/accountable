@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup C: Command Centre</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sea: #06D6A0; --sea-ink: #037F5F; --mari: #FFC145; --mari-ink: #9A6700; --coral: #F78C6B;
+    --cer: #118AB2; --rasp: #EF476F; --mid: #073B4C; --mist: #CDD8DB; --page: #F0F4F5;
+    --muted: #5B7A85; --line: #E6EDEF;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: "Instrument Sans", sans-serif; color: var(--mid); background: #DDE5E7; font-size: 13px; }
+  .caption { width: 1440px; margin: 32px auto 12px; font-family: "Instrument Serif", serif; font-size: 26px; }
+  .screen { width: 1440px; min-height: 960px; margin: 0 auto 40px; background: var(--page); display: flex; }
+  .mono { font-family: "JetBrains Mono", monospace; }
+
+  .rail { width: 72px; background: var(--mid); display: flex; flex-direction: column; align-items: center; padding: 18px 0; gap: 8px; flex-shrink: 0; }
+  .rail .logo { width: 36px; height: 36px; border-radius: 10px; background: var(--sea); display: grid; place-items: center; font-weight: 700; font-size: 16px; margin-bottom: 18px; }
+  .rail .i { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; color: var(--mist); position: relative; }
+  .rail .i svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; }
+  .rail .i.on { background: rgba(6,214,160,.16); color: var(--sea); }
+  .rail .i.on::after { content: ""; position: absolute; right: -14px; width: 4px; height: 20px; border-radius: 4px; background: var(--sea); }
+  .rail .badge { position: absolute; top: 6px; right: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--rasp); }
+
+  .body { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+  .bar { height: 60px; display: flex; align-items: center; gap: 16px; padding: 0 24px; }
+  .bar h1 { font-size: 20px; font-weight: 600; }
+  .crumb { color: var(--muted); }
+  .search { margin-left: auto; width: 300px; background: #fff; border-radius: 10px; padding: 8px 12px; color: var(--muted); display: flex; justify-content: space-between; }
+  .kbd { font: 500 11px "JetBrains Mono"; background: var(--page); border-radius: 5px; padding: 1px 6px; }
+  .btn { background: var(--sea); color: var(--mid); border: 0; border-radius: 10px; padding: 9px 14px; font: 600 13px "Instrument Sans"; }
+  .btn.alt { background: #fff; }
+
+  .content { display: grid; grid-template-columns: 1fr 340px; gap: 16px; padding: 0 24px 24px; flex: 1; }
+  .main { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  .panel { background: #fff; border-radius: 12px; padding: 16px; }
+  .ph { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .ph h2 { font-size: 14px; font-weight: 600; }
+  .ph small { color: var(--muted); font-size: 12px; }
+  .seg { display: flex; background: var(--page); border-radius: 8px; padding: 2px; }
+  .seg span { padding: 4px 10px; border-radius: 6px; font-size: 12px; color: var(--muted); font-weight: 500; }
+  .seg span.on { background: #fff; color: var(--mid); box-shadow: 0 1px 2px rgba(7,59,76,.1); }
+
+  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .tile { background: #fff; border-radius: 12px; padding: 14px 16px; display: grid; grid-template-columns: 1fr 96px; align-items: end; }
+  .tile .l { font-size: 12px; color: var(--muted); font-weight: 500; grid-column: 1 / -1; display: flex; justify-content: space-between; }
+  .tile .v { font: 600 22px "JetBrains Mono"; letter-spacing: -0.02em; margin-top: 6px; }
+  .tile .s { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .tile svg { width: 96px; height: 40px; }
+  .delta { font: 600 11px "JetBrains Mono"; border-radius: 6px; padding: 1px 6px; }
+  .pos { background: #DCF8EF; color: var(--sea-ink); }
+  .neg { background: #FDE6EC; color: #B0193F; }
+
+  .charts { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; }
+  .stack { display: flex; height: 40px; border-radius: 10px; overflow: hidden; gap: 3px; }
+  .stack div { display: flex; align-items: center; padding-left: 10px; font: 600 12px "JetBrains Mono"; }
+  .legend { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 14px; }
+  .legend div { font-size: 12px; color: var(--muted); }
+  .legend b { display: block; font: 600 15px "JetBrains Mono"; color: var(--mid); margin-top: 4px; }
+  .legend .k { display: flex; gap: 6px; align-items: center; font-weight: 600; color: var(--mid); }
+  .sq { width: 10px; height: 10px; border-radius: 3px; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; padding: 6px 8px; }
+  td { padding: 8px; box-shadow: inset 0 1px 0 var(--line); }
+  td.n { font-family: "JetBrains Mono"; text-align: right; }
+  .tag { border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: 600; }
+
+  .rightcol { display: flex; flex-direction: column; gap: 16px; }
+  .tk { display: grid; grid-template-columns: 16px 1fr; gap: 10px; padding: 9px 0; }
+  .tk + .tk { box-shadow: inset 0 1px 0 var(--line); }
+  .tk .box { width: 16px; height: 16px; border-radius: 4px; border: 2px solid var(--mist); margin-top: 1px; }
+  .tk .t { font-weight: 600; }
+  .tk .s { color: var(--muted); font-size: 12px; margin-top: 2px; display: flex; justify-content: space-between; }
+  .tk .d { font-family: "JetBrains Mono"; }
+  .tl { position: relative; padding-left: 20px; }
+  .tl::before { content: ""; position: absolute; left: 5px; top: 6px; bottom: 6px; width: 2px; background: var(--line); border-radius: 2px; }
+  .ev { position: relative; padding: 0 0 12px; }
+  .ev::before { content: ""; position: absolute; left: -19px; top: 3px; width: 10px; height: 10px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 3px #fff; }
+  .ev .t { font-weight: 500; }
+  .ev .s { color: var(--muted); font-size: 12px; margin-top: 1px; }
+
+  /* pipeline */
+  .board { display: grid; grid-template-columns: repeat(4, 1fr) 210px; gap: 12px; }
+  .col { display: flex; flex-direction: column; gap: 8px; }
+  .colh { background: #fff; border-radius: 12px; padding: 12px; }
+  .colh .n { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; }
+  .colh .n .c { margin-left: auto; font: 500 12px "JetBrains Mono"; background: var(--page); border-radius: 6px; padding: 1px 7px; }
+  .colh .mbar { height: 4px; border-radius: 4px; background: var(--page); margin: 10px 0 8px; overflow: hidden; }
+  .colh .mbar i { display: block; height: 100%; }
+  .colh .nums { display: flex; justify-content: space-between; font: 500 12px "JetBrains Mono"; color: var(--muted); }
+  .colh .nums b { color: var(--mid); }
+  .card { background: #fff; border-radius: 10px; padding: 10px 12px; display: grid; grid-template-columns: 28px 1fr auto; gap: 4px 10px; align-items: center; }
+  .card .av { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; font-size: 11px; font-weight: 700; grid-row: span 2; }
+  .card .t { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card .v { font: 600 12px "JetBrains Mono"; }
+  .card .o { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card .d { font: 500 11px "JetBrains Mono"; color: var(--muted); }
+  .card .d.late { color: #fff; background: var(--rasp); border-radius: 5px; padding: 1px 6px; }
+  .card.moving { box-shadow: 0 14px 30px rgba(7,59,76,.2); transform: translateX(10px) rotate(1deg); }
+  .slot { height: 50px; border-radius: 10px; background: rgba(6,214,160,.12); box-shadow: inset 0 0 0 2px rgba(6,214,160,.5); }
+  .plus { text-align: center; color: var(--muted); padding: 8px; border-radius: 10px; font-weight: 500; }
+  .closedcol { display: flex; flex-direction: column; gap: 12px; }
+  .cl { background: #fff; border-radius: 12px; padding: 12px; }
+  .cl .row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 12px; }
+  .cl .row + .row { box-shadow: inset 0 1px 0 var(--line); }
+  .cl .row span:last-child { font-family: "JetBrains Mono"; }
+  svg text { font-family: "JetBrains Mono", monospace; font-size: 10px; fill: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="caption">C · Command Centre: dense, everything on one screen. Dashboard</div>
+<div class="screen">
+  <nav class="rail" id="rail1"></nav>
+  <div class="body">
+    <div class="bar"><h1>Dashboard</h1><span class="crumb">17 Nov 2026</span><div class="search">Search anything <span class="kbd">Ctrl K</span></div><button class="btn alt">Log activity</button><button class="btn">Add deal</button></div>
+    <div class="content">
+      <div class="main">
+        <div class="tiles" id="tiles"></div>
+        <div class="charts">
+          <div class="panel"><div class="ph"><h2>Revenue won and deals won</h2><div class="seg"><span>6 months</span><span class="on">12 months</span></div></div><svg id="combo" width="100%" height="230"></svg>
+            <div style="display:flex;gap:18px;font-size:12px;color:var(--muted)"><span><span class="sq" style="display:inline-block;background:#06D6A0"></span> Revenue won (line)</span><span><span class="sq" style="display:inline-block;background:#FFC145"></span> Deals won (bars)</span></div></div>
+          <div class="panel"><div class="ph"><h2>Sales funnel</h2><small>Open value at or past each stage, and won this month</small></div><svg id="fun" width="100%" height="250"></svg></div>
+        </div>
+        <div class="panel"><div class="ph"><h2>Open pipeline</h2><small>US$695,000 across 8 deals · US$371,450 expected</small></div>
+          <div class="stack" id="stack"></div><div class="legend" id="legend"></div></div>
+        <div class="panel"><div class="ph"><h2>Deals closing soon</h2><small>Open deals by close date</small></div>
+          <table><thead><tr><th>Deal</th><th>Organization</th><th>Stage</th><th style="text-align:right">Value</th><th style="text-align:right">Expected</th><th style="text-align:right">Close date</th></tr></thead><tbody id="soon"></tbody></table></div>
+      </div>
+      <div class="rightcol">
+        <div class="panel"><div class="ph"><h2>Follow-ups</h2><div class="seg"><span class="on">Open 5</span><span>Done</span></div></div><div id="tasks"></div></div>
+        <div class="panel" style="flex:1"><div class="ph"><h2>Recent activity</h2><small>Newest first</small></div><div class="tl" id="tl"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="caption">C · Command Centre: Pipeline</div>
+<div class="screen">
+  <nav class="rail" id="rail2"></nav>
+  <div class="body">
+    <div class="bar"><h1>Pipeline</h1><span class="crumb">8 open deals</span><div class="search">Filter cards <span class="kbd">/</span></div><div class="seg"><span class="on">Board</span><span>Table</span></div><button class="btn">Add deal</button></div>
+    <div style="padding:0 24px 24px">
+      <div class="panel" style="margin-bottom:12px;display:grid;grid-template-columns:auto auto auto 1fr;gap:36px;align-items:center">
+        <div><div style="color:var(--muted);font-size:12px">Open value</div><div class="mono" style="font-size:20px;font-weight:600">US$695,000</div></div>
+        <div><div style="color:var(--muted);font-size:12px">Expected revenue</div><div class="mono" style="font-size:20px;font-weight:600">US$371,450</div></div>
+        <div><div style="color:var(--muted);font-size:12px">Late</div><div class="mono" style="font-size:20px;font-weight:600;color:var(--rasp)">2 · US$330,000</div></div>
+        <div class="stack" id="stack2" style="height:14px"></div>
+      </div>
+      <div class="board" id="board"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const fmt = n => 'US$' + n.toLocaleString('en-US');
+const ic = ['<path d="M3 13h8V3H3zM13 21h8V11h-8zM3 21h8v-6H3zM13 3v6h8V3z"/>','<rect x="3" y="4" width="5" height="16" rx="1"/><rect x="10" y="4" width="5" height="11" rx="1"/><rect x="17" y="4" width="4" height="7" rx="1"/>','<path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>','<path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1M14 9h1M9 13h1M14 13h1"/>','<circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M16 4a4 4 0 0 1 0 8"/>'];
+const rail = a => '<div class="logo">A</div>' + ic.map((p, i) => `<div class="i ${i===a?'on':''}"><svg viewBox="0 0 24 24">${p}</svg>${i===2?'<span class="badge"></span>':''}</div>`).join('');
+rail1.innerHTML = rail(0); rail2.innerHTML = rail(1);
+
+const months = ['D','J','F','M','A','M','J','J','A','S','O','N'];
+const rev = [38,30,0,24,0,86,45,28,120,64,40,92], won = [1,1,0,1,0,1,1,1,1,1,1,1];
+const spark = (data, c) => { const mx = Math.max(...data), x = i => i * 96 / (data.length-1), y = v => 36 - v / mx * 32;
+  return `<svg viewBox="0 0 96 40"><polyline points="${data.map((v,i)=>`${x(i)},${y(v)}`).join(' ')}" fill="none" stroke="${c}" stroke-width="2" stroke-linejoin="round"/><circle cx="96" cy="${y(data[data.length-1])}" r="3" fill="${c}"/></svg>`; };
+tiles.innerHTML = [
+  ['Open pipeline', 'US$695,000', '8 open deals', '<span class="delta pos">+US$96,000</span>', [520,560,540,610,600,640,630,695], '#06B386'],
+  ['Expected revenue', 'US$371,450', '53% of open value', '<span class="delta pos">+US$48,000</span>', [280,300,290,320,330,340,325,371], '#E0A100'],
+  ['Won this month', 'US$92,000', 'October: US$40,000', '<span class="delta pos">+130%</span>', rev, '#F78C6B'],
+  ['Late deals', '2', 'US$330,000 at risk', '<span class="delta neg">+1</span>', [0,0,1,1,0,1,1,2], '#EF476F']
+].map(t => `<div class="tile"><div class="l">${t[0]}${t[3]}</div><div><div class="v" ${t[0]==='Late deals'?'style="color:var(--rasp)"':''}>${t[1]}</div><div class="s">${t[2]}</div></div>${spark(t[4], t[5])}</div>`).join('');
+
+(function () {
+  const svg = combo, W = svg.clientWidth, H = 230, L = 40, R = 26, B = 22, T = 10;
+  const x = i => L + (i + .5) * (W - L - R) / 12, y = v => T + (H - T - B) * (1 - v / 140), yb = v => T + (H - T - B) * (1 - v / 3);
+  let s = '';
+  [0, 35, 70, 105, 140].forEach(v => s += `<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="#EDF2F3"/><text x="${L-6}" y="${y(v)+3}" text-anchor="end">${v?v+'k':'0'}</text>`);
+  [1,2,3].forEach(v => s += `<text x="${W-R+6}" y="${yb(v)+3}">${v}</text>`);
+  const bw = (W - L - R) / 12 * .45;
+  won.forEach((v, i) => { if (v) s += `<rect x="${x(i)-bw/2}" y="${yb(v)}" width="${bw}" height="${yb(0)-yb(v)}" rx="4" fill="#FFC145" opacity=".85"/>`; s += `<text x="${x(i)}" y="${H-5}" text-anchor="middle">${months[i]}</text>`; });
+  s += `<polyline points="${rev.map((v,i)=>`${x(i)},${y(v)}`).join(' ')}" fill="none" stroke="#05B184" stroke-width="2.5" stroke-linejoin="round"/>`;
+  rev.forEach((v, i) => s += `<circle cx="${x(i)}" cy="${y(v)}" r="3" fill="#fff" stroke="#05B184" stroke-width="2"/>`);
+  svg.innerHTML = s;
+})();
+(function () {
+  const svg = fun, W = svg.clientWidth, H = 250;
+  const st = [['New','#118AB2',695000],['Qualified','#06D6A0',653000],['Proposal','#FFC145',546000],['Negotiation','#F78C6B',270000],['Won','#073B4C',92000]];
+  const rowH = H / st.length; let s = '';
+  st.forEach(([n, c, v], i) => {
+    const w = (W - 150) * v / 695000, x0 = 150 + ((W - 150) - w) / 2, yy = i * rowH + 4;
+    s += `<text x="0" y="${yy + rowH/2}" style="font-family:Instrument Sans;font-size:12px;font-weight:600;fill:#073B4C">${n}</text><text x="0" y="${yy + rowH/2 + 14}">${fmt(v)}</text>`;
+    s += `<rect x="${x0}" y="${yy}" width="${w}" height="${rowH-10}" rx="6" fill="${c}"/>`;
+  });
+  svg.innerHTML = s;
+})();
+
+const stg = [['New','#118AB2','#fff',42000,4200,2],['Qualified','#06D6A0','#073B4C',107000,26750,2],['Proposal','#FFC145','#073B4C',276000,138000,2],['Negotiation','#F78C6B','#073B4C',270000,202500,2]];
+const stackHtml = lab => stg.map(([n,c,tc,v]) => `<div style="flex:${v};background:${c};color:${tc}">${lab && v>60000 ? fmt(v) : ''}</div>`).join('');
+stack.innerHTML = stackHtml(1); stack2.innerHTML = stackHtml(0);
+legend.innerHTML = stg.map(([n,c,tc,v,e,k]) => `<div><span class="k"><span class="sq" style="background:${c}"></span>${n} · ${k}</span><b>${fmt(v)}</b>${fmt(e)} expected</div>`).join('');
+
+const tag = { New:['#E3F1F7','#0B6C8C'], Qualified:['#DCF8EF','#037F5F'], Proposal:['#FFF3DA','#9A6700'], Negotiation:['#FEEBE4','#B4502F'] };
+soon.innerHTML = [['Data platform','Bluepeak Retail','Negotiation',150000,112500,'31 Oct',1],['Cloud migration','Meridian Health','Proposal',180000,90000,'10 Nov',1],['Managed IT contract','Harbor Finance','Negotiation',120000,90000,'28 Nov'],['Route optimisation AI','Northwind Logistics','Proposal',96000,48000,'4 Dec'],['Fraud model review','Harbor Finance','Qualified',65000,16250,'18 Dec']]
+  .map(r => `<tr><td style="font-weight:600">${r[0]}</td><td>${r[1]}</td><td><span class="tag" style="background:${tag[r[2]][0]};color:${tag[r[2]][1]}">${r[2]}</span></td><td class="n">${fmt(r[3])}</td><td class="n">${fmt(r[4])}</td><td class="n" ${r[6]?'style="color:#EF476F;font-weight:600"':''}>${r[6]?'Late · ':''}${r[5]}</td></tr>`).join('');
+
+tasks.innerHTML = [['Send revised SOW','Cloud migration','12 Nov',1],['Call about budget sign-off','Data platform','14 Nov',1],['Demo the support assistant','Dana Okafor','18 Nov'],['Check security review','Managed IT contract','20 Nov'],['Share pilot results','Sam Patel','24 Nov']]
+  .map(t => `<div class="tk"><div class="box" ${t[3]?'style="border-color:#EF476F"':''}></div><div><div class="t">${t[0]}</div><div class="s"><span>${t[1]}</span><span class="d" ${t[3]?'style="color:#EF476F;font-weight:600"':''}>${t[3]?'Overdue · ':''}${t[2]}</span></div></div></div>`).join('');
+tl.innerHTML = [['#06D6A0','Endpoint security rollout moved to Won','Meridian Health · 6 Nov'],['#FFC145','Call: managed IT scope with Raj Mehta','Harbor Finance · 5 Nov'],['#118AB2','Email: pricing options sent','Northwind Logistics · 3 Nov'],['#F78C6B','Note: wants a two-store pilot first','Bluepeak Retail · 2 Nov'],['#06D6A0','Route optimisation AI moved to Proposal','Northwind Logistics · 29 Oct'],['#118AB2','Email: security questionnaire returned','Harbor Finance · 27 Oct'],['#FFC145','Call: kickoff for the AI support pilot','Westbrook University · 24 Oct']]
+  .map(e => `<div class="ev" style="--c:${e[0]}"><div class="t">${e[1]}</div><div class="s">${e[2]}</div></div>`).join('');
+
+const deals = {
+  New: [['Store analytics pilot','Bluepeak Retail',24000,'LC','30 Jan'],['Campus helpdesk AI','Westbrook University',18000,'DO','15 Feb']],
+  Qualified: [['Fraud model review','Harbor Finance',65000,'RM','18 Dec'],['Plant network upgrade','Ironclad Manufacturing',42000,'TB','9 Jan']],
+  Proposal: [['Cloud migration','Meridian Health',180000,'GL','10 Nov',1],['Route optimisation AI','Northwind Logistics',96000,'SP','4 Dec']],
+  Negotiation: [['Data platform','Bluepeak Retail',150000,'MR','31 Oct',1],['Managed IT contract','Harbor Finance',120000,'RM','28 Nov']]
+};
+board.innerHTML = stg.map(([n, c, tc, v, e, k], si) => `<div class="col"><div class="colh"><div class="n"><span class="sq" style="background:${c}"></span>${n}<span class="c">${k}</span></div><div class="mbar"><i style="width:${v/276000*100}%;background:${c}"></i></div><div class="nums"><b>${fmt(v)}</b><span>${fmt(e)} exp.</span></div></div>` +
+  deals[n].map((d, i) => `<div class="card ${n==='Qualified'&&i===0?'moving':''}"><div class="av" style="background:${c}22;color:${tc==='#fff'?c:'#073B4C'}">${d[3]}</div><div class="t">${d[0]}</div><div class="v">${fmt(d[2])}</div><div class="o">${d[1]}</div><div class="d ${d[5]?'late':''}">${d[5]?'Late ':''}${d[4]}</div></div>`).join('') +
+  (n==='Proposal'?'<div class="slot"></div>':'') + '<div class="plus">+ Add deal</div></div>').join('') +
+  `<div class="closedcol"><div class="cl"><div class="ph"><h2><span class="sq" style="display:inline-block;background:#073B4C"></span> Won</h2><small class="mono">10 · US$567,000</small></div>
+     <div class="row"><span>Endpoint security rollout</span><span>US$92,000</span></div><div class="row"><span>AI document search</span><span>US$40,000</span></div><div class="row"><span>Warehouse Wi-Fi</span><span>US$64,000</span></div><div class="row" style="color:var(--cer);font-weight:500"><span>Show all 10</span><span></span></div></div>
+   <div class="cl"><div class="ph"><h2><span class="sq" style="display:inline-block;background:#CDD8DB"></span> Lost</h2><small class="mono">2 · US$97,000</small></div>
+     <div class="row"><span>ERP integration</span><span>US$75,000</span></div><div class="row"><span>Lab data portal</span><span>US$22,000</span></div></div>
+   <div class="cl" style="background:rgba(255,255,255,.5);text-align:center;color:var(--muted)">Drop a card here to close it as Won or Lost</div></div>`;
+</script>
+</body>
+</html>

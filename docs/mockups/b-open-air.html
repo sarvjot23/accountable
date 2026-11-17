@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup B: Open Air</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sea: #06D6A0; --sea-ink: #037F5F; --mari: #FFC145; --mari-ink: #9A6700; --coral: #F78C6B;
+    --cer: #118AB2; --rasp: #EF476F; --mid: #073B4C; --mist: #CDD8DB; --page: #F0F4F5;
+    --muted: #5B7A85; --line: #E6EDEF;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: "Instrument Sans", sans-serif; color: var(--mid); background: #DDE5E7; font-size: 14px; }
+  .caption { width: 1440px; margin: 32px auto 12px; font-family: "Instrument Serif", serif; font-size: 26px; }
+  .screen { width: 1440px; min-height: 960px; margin: 0 auto 40px; background: var(--page); }
+
+  .top { height: 68px; display: flex; align-items: center; padding: 0 40px; gap: 40px; background: #fff; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; }
+  .logo { width: 30px; height: 30px; border-radius: 50%; background: var(--mid); display: grid; place-items: center; }
+  .logo i { width: 12px; height: 12px; border-radius: 50%; background: var(--sea); }
+  .tabs { display: flex; gap: 6px; }
+  .tabs span { padding: 8px 14px; border-radius: 999px; color: var(--muted); font-weight: 500; }
+  .tabs span.on { background: var(--mid); color: #fff; }
+  .search { margin-left: auto; width: 260px; background: var(--page); border-radius: 999px; padding: 9px 16px; color: var(--muted); }
+  .btn { background: var(--sea); color: var(--mid); border: 0; border-radius: 999px; padding: 10px 18px; font: 600 14px "Instrument Sans"; }
+
+  .wrap { padding: 36px 40px 40px; }
+  .hello { display: flex; align-items: end; justify-content: space-between; margin-bottom: 28px; }
+  .hello h1 { font-family: "Instrument Serif", serif; font-weight: 400; font-size: 44px; letter-spacing: -0.01em; line-height: 1.05; }
+  .hello h1 em { color: var(--sea-ink); }
+  .hello p { color: var(--muted); margin-top: 6px; font-size: 15px; }
+  .chips { display: flex; gap: 8px; }
+  .chip { background: #fff; border-radius: 999px; padding: 8px 14px; font-weight: 500; }
+  .chip.on { background: var(--mid); color: #fff; }
+
+  .panel { background: #fff; border-radius: 20px; padding: 26px; }
+  .panel h2 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .panel .sub { color: var(--muted); font-size: 13px; margin-bottom: 16px; }
+  .hero { display: grid; grid-template-columns: repeat(4, 1fr); padding: 0; overflow: hidden; margin-bottom: 24px; }
+  .hero > div { padding: 26px 28px; }
+  .hero > div + div { box-shadow: inset 1px 0 0 var(--line); }
+  .hero .l { color: var(--muted); font-weight: 500; }
+  .hero .v { font: 600 34px "JetBrains Mono"; letter-spacing: -0.03em; margin: 10px 0 8px; }
+  .hero .s { font-size: 13px; color: var(--muted); }
+  .pill { display: inline-block; border-radius: 999px; padding: 2px 9px; font-size: 12px; font-weight: 600; }
+  .g { background: #DCF8EF; color: var(--sea-ink); }
+  .r { background: #FDE6EC; color: #B0193F; }
+  .hero .meter { height: 6px; border-radius: 999px; background: var(--page); margin-top: 14px; overflow: hidden; }
+  .hero .meter i { display: block; height: 100%; border-radius: 999px; }
+
+  .row { display: grid; gap: 24px; margin-bottom: 24px; }
+  .row.c2 { grid-template-columns: 1.1fr 1fr; }
+  .row.c3 { grid-template-columns: 1fr 1fr 1fr; }
+
+  .step { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
+  .step .shape { height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; font-weight: 600; }
+  .step .shape b { font: 600 15px "JetBrains Mono"; }
+  .step .e { font-size: 12px; color: var(--muted); width: 120px; }
+  .step .e b { display: block; font: 600 13px "JetBrains Mono"; color: var(--mid); }
+
+  .li { display: flex; gap: 12px; padding: 11px 0; align-items: flex-start; }
+  .li + .li { box-shadow: inset 0 1px 0 var(--line); }
+  .av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-weight: 600; font-size: 12px; flex-shrink: 0; }
+  .li .t { font-weight: 500; }
+  .li .s { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .li .d { margin-left: auto; font: 500 12px "JetBrains Mono"; white-space: nowrap; color: var(--muted); }
+  .check { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--mist); flex-shrink: 0; margin-top: 2px; }
+
+  /* pipeline */
+  .board { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+  .colh { background: #fff; border-radius: 16px; padding: 14px 16px; margin-bottom: 12px; }
+  .colh .n { display: flex; align-items: center; justify-content: space-between; }
+  .stagepill { border-radius: 999px; padding: 4px 12px; font-weight: 600; font-size: 13px; }
+  .colh .cnt { font: 500 12px "JetBrains Mono"; color: var(--muted); }
+  .colh .v { font: 600 18px "JetBrains Mono"; margin-top: 10px; }
+  .colh .x { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .card { background: #fff; border-radius: 16px; padding: 16px; margin-bottom: 12px; }
+  .card .o { font-size: 12px; color: var(--muted); font-weight: 500; }
+  .card .t { font-weight: 600; font-size: 15px; margin: 3px 0 12px; line-height: 1.25; }
+  .card .vv { font: 600 16px "JetBrains Mono"; }
+  .prob { display: flex; align-items: center; gap: 8px; margin: 10px 0 12px; font: 500 11px "JetBrains Mono"; color: var(--muted); }
+  .prob .track { flex: 1; height: 5px; border-radius: 999px; background: var(--page); overflow: hidden; }
+  .prob .track i { display: block; height: 100%; }
+  .card .f { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--muted); }
+  .card .f .date { font-family: "JetBrains Mono"; }
+  .card.late { box-shadow: 0 0 0 2px #F9B7C7; }
+  .card.lift { box-shadow: 0 18px 36px rgba(7,59,76,.18); transform: translateY(-4px) rotate(-1.5deg); }
+  .ghost { height: 70px; border-radius: 16px; background: repeating-linear-gradient(45deg, #E3EBED 0 8px, #EDF2F3 8px 16px); margin-bottom: 12px; }
+  .addc { text-align: center; padding: 12px; border-radius: 16px; color: var(--muted); font-weight: 500; background: rgba(255,255,255,.55); }
+  .closed .card { opacity: .85; }
+  svg text { font-family: "JetBrains Mono", monospace; font-size: 11px; fill: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="caption">B · Open Air: top bar, big numbers, generous space. Dashboard</div>
+<div class="screen">
+  <div class="top" id="top1"></div>
+  <div class="wrap">
+    <div class="hello">
+      <div><h1>Good morning. <em>US$92,000</em> won so far this month.</h1><p>Tuesday 17 November 2026 · 2 follow-ups overdue, 2 deals running late</p></div>
+      <div class="chips"><span class="chip">Log activity</span><span class="chip on">Add deal</span></div>
+    </div>
+    <div class="panel hero">
+      <div><div class="l">Open pipeline</div><div class="v">US$695,000</div><div class="s">8 open deals</div><div class="meter"><i style="width:100%;background:var(--sea)"></i></div></div>
+      <div><div class="l">Expected revenue</div><div class="v">US$371,450</div><div class="s">53% of the open pipeline</div><div class="meter"><i style="width:53%;background:var(--mari)"></i></div></div>
+      <div><div class="l">Won this month</div><div class="v">US$92,000</div><div class="s"><span class="pill g">+US$52,000</span> on October</div><div class="meter"><i style="width:77%;background:var(--coral)"></i></div></div>
+      <div><div class="l">Late deals</div><div class="v" style="color:var(--rasp)">2</div><div class="s"><span class="pill r">US$330,000</span> past its close date</div><div class="meter"><i style="width:47%;background:var(--rasp)"></i></div></div>
+    </div>
+    <div class="row c2">
+      <div class="panel"><h2>Revenue won</h2><div class="sub">Each month, last 12 months · US$567,000 in total</div><svg id="line" width="100%" height="230"></svg></div>
+      <div class="panel"><h2>Sales funnel</h2><div class="sub">Value reaching each stage, last 12 months, and the share of what entered at New</div><svg id="funnel" width="100%" height="280" style="margin-top:6px"></svg>
+        <div style="display:flex;justify-content:space-between;margin-top:14px;padding-top:12px;box-shadow:inset 0 1px 0 #E6EDEF;font-size:13px;color:var(--muted)"><span>New to Won, by value</span><b style="font-family:JetBrains Mono;color:var(--mid)">42% · 10 of 20 deals</b></div></div>
+    </div>
+    <div class="row c3">
+      <div class="panel"><h2>Deals won</h2><div class="sub">Count each month</div><svg id="bar" width="100%" height="210"></svg></div>
+      <div class="panel"><h2>Follow-ups</h2><div class="sub">2 overdue · 3 in the next 14 days</div><div id="tasks"></div></div>
+      <div class="panel"><h2>Recent activity</h2><div class="sub">Everything, newest first</div><div id="acts"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="caption">B · Open Air: Pipeline</div>
+<div class="screen">
+  <div class="top" id="top2"></div>
+  <div class="wrap">
+    <div class="hello">
+      <div><h1>Pipeline</h1><p><b class="mono" style="font-family:JetBrains Mono">US$695,000</b> open across 8 deals · <b style="font-family:JetBrains Mono">US$371,450</b> expected</p></div>
+      <div class="chips"><span class="chip">Open only</span><span class="chip on">All stages</span><button class="btn">Add deal</button></div>
+    </div>
+    <div class="board" id="board"></div>
+  </div>
+</div>
+
+<script>
+const fmt = n => 'US$' + n.toLocaleString('en-US');
+const topBar = a => `<div class="brand"><div class="logo"><i></i></div>Accountable</div><div class="tabs">${['Dashboard','Pipeline','Deals','Organizations','Contacts'].map(t => `<span class="${t===a?'on':''}">${t}</span>`).join('')}</div><div class="search">Search deals, people, companies</div><button class="btn">Add deal</button>`;
+top1.innerHTML = topBar('Dashboard'); top2.innerHTML = topBar('Pipeline');
+
+const months = ['Dec','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov'];
+const rev = [38,30,0,24,0,86,45,28,120,64,40,92], won = [1,1,0,1,0,1,1,1,1,1,1,1];
+
+(function () {
+  const svg = line, W = svg.clientWidth, H = 230, L = 66, B = 26, T = 14, max = 140;
+  const x = i => L + i * (W - L - 16) / 11, y = v => T + (H - T - B) * (1 - v / max);
+  let s = '';
+  [0, 70, 140].forEach(v => s += `<line x1="${L}" x2="${W-16}" y1="${y(v)}" y2="${y(v)}" stroke="#E6EDEF" stroke-dasharray="${v?'3 4':''}"/><text x="${L-10}" y="${y(v)+4}" text-anchor="end">${v?'US$'+v+'k':'0'}</text>`);
+  let d = `M${x(0)},${y(rev[0])}`;
+  for (let i = 1; i < 12; i++) { const cx = (x(i-1) + x(i)) / 2; d += ` C${cx},${y(rev[i-1])} ${cx},${y(rev[i])} ${x(i)},${y(rev[i])}`; }
+  s += `<defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#06D6A0" stop-opacity=".22"/><stop offset="1" stop-color="#06D6A0" stop-opacity="0"/></linearGradient></defs>`;
+  s += `<path d="${d} L${x(11)},${y(0)} L${x(0)},${y(0)} Z" fill="url(#ga)"/><path d="${d}" fill="none" stroke="#05B184" stroke-width="3"/>`;
+  rev.forEach((v, i) => s += `<text x="${x(i)}" y="${H-6}" text-anchor="middle">${months[i]}</text>`);
+  s += `<line x1="${x(8)}" x2="${x(8)}" y1="${y(120)}" y2="${y(0)}" stroke="#073B4C" stroke-dasharray="2 3"/><circle cx="${x(8)}" cy="${y(120)}" r="6" fill="#fff" stroke="#05B184" stroke-width="3"/>`;
+  s += `<rect x="${x(8)+12}" y="${y(120)-14}" width="132" height="44" rx="10" fill="#073B4C"/><text x="${x(8)+24}" y="${y(120)+4}" style="fill:#CDD8DB">August</text><text x="${x(8)+24}" y="${y(120)+20}" style="fill:#fff;font-weight:600;font-size:13px">US$120,000</text>`;
+  svg.innerHTML = s;
+})();
+(function () {
+  const svg = bar, W = svg.clientWidth, H = 210, B = 26, T = 12, bw = W / 12;
+  let s = '';
+  won.forEach((v, i) => {
+    const h = (H - T - B) * v / 2, bx = i * bw + bw * .18, w = bw * .64;
+    s += `<rect x="${bx}" y="${T}" width="${w}" height="${H-T-B}" rx="${w/2}" fill="#F3F6F7"/>`;
+    if (v) s += `<rect x="${bx}" y="${H-B-h}" width="${w}" height="${h}" rx="${w/2}" fill="${i===11?'#F0A800':'#FFC145'}"/>`;
+    s += `<text x="${bx+w/2}" y="${H-6}" text-anchor="middle">${months[i][0]}</text>`;
+  });
+  svg.innerHTML = s;
+})();
+
+// Value reaching each stage: every deal open now or closed in the last 12 months, counted at
+// each stage up to the furthest one it reached (Won deals count all the way down; Lost deals
+// count up to the stage they were lost from).
+(function () {
+  const st = [['New','#06D6A0','#073B4C',1359000,20],['Qualified','#FFC145','#073B4C',1317000,18],['Proposal','#F78C6B','#073B4C',1210000,16],['Negotiation','#118AB2','#fff',912000,13],['Won','#073B4C','#fff',567000,10]];
+  const svg = funnel, W = svg.clientWidth, R = 150, FW = W - R, segH = 50, gap = 6, max = st[0][3];
+  const wOf = v => FW * Math.max(.3, v / max);
+  let s = '';
+  st.forEach(([n, c, tc, v, k], i) => {
+    const top = wOf(v), bot = i < st.length - 1 ? wOf(st[i+1][3]) : top * .78, y0 = i * (segH + gap), y1 = y0 + segH, cx = FW / 2;
+    s += `<path d="M${cx-top/2},${y0} L${cx+top/2},${y0} L${cx+bot/2},${y1} L${cx-bot/2},${y1} Z" fill="${c}" stroke="${c}" stroke-width="6" stroke-linejoin="round"/>`;
+    s += `<text x="${cx}" y="${y0+segH/2+5}" text-anchor="middle" style="font-family:Instrument Sans;font-size:14px;font-weight:600;fill:${tc}">${n}</text>`;
+    s += `<text x="${W}" y="${y0+segH/2-1}" text-anchor="end" style="font-size:14px;font-weight:600;fill:#073B4C">${fmt(v)}</text>`;
+    s += `<text x="${W}" y="${y0+segH/2+16}" text-anchor="end">${k} deals${i?' · '+Math.round(v/max*100)+'%':''}</text>`;
+  });
+  svg.setAttribute('height', st.length * (segH + gap));
+  svg.innerHTML = s;
+})();
+
+const tasks = [['Send revised SOW','Meridian Health','12 Nov',1],['Call about budget sign-off','Bluepeak Retail','14 Nov',1],['Demo the support assistant','Westbrook University','18 Nov'],['Check security review','Harbor Finance','20 Nov'],['Share pilot results','Northwind Logistics','24 Nov']];
+document.getElementById('tasks').innerHTML = tasks.map(t => `<div class="li"><div class="check" style="${t[3]?'border-color:#EF476F':''}"></div><div><div class="t">${t[0]}</div><div class="s">${t[1]}</div></div><div class="d" style="${t[3]?'color:#EF476F':''}">${t[2]}</div></div>`).join('');
+
+const acts = [['GL','#DCF8EF','Endpoint security rollout moved to Won','Meridian Health','6 Nov'],['RM','#FFF3DA','Call about managed IT scope','Harbor Finance','5 Nov'],['SP','#E3F1F7','Emailed pricing options','Northwind Logistics','3 Nov'],['LC','#FEEBE4','Wants a two-store pilot first','Bluepeak Retail','2 Nov'],['SP','#DCF8EF','Route optimisation AI moved to Proposal','Northwind Logistics','29 Oct']];
+document.getElementById('acts').innerHTML = acts.map(a => `<div class="li"><div class="av" style="background:${a[1]}">${a[0]}</div><div><div class="t">${a[2]}</div><div class="s">${a[3]}</div></div><div class="d">${a[4]}</div></div>`).join('');
+
+const deals = {
+  New: [['Store analytics pilot','Bluepeak Retail',24000,10,'Lena Cho','30 Jan'],['Campus helpdesk AI','Westbrook University',18000,10,'Dana Okafor','15 Feb']],
+  Qualified: [['Fraud model review','Harbor Finance',65000,25,'Raj Mehta','18 Dec'],['Plant network upgrade','Ironclad Manufacturing',42000,25,'Tom Becker','9 Jan']],
+  Proposal: [['Cloud migration','Meridian Health',180000,50,'Grace Liu','10 Nov',1],['Route optimisation AI','Northwind Logistics',96000,50,'Sam Patel','4 Dec']],
+  Negotiation: [['Data platform','Bluepeak Retail',150000,75,'Marco Ruiz','31 Oct',1],['Managed IT contract','Harbor Finance',120000,75,'Raj Mehta','28 Nov']],
+  Won: [['Endpoint security rollout','Meridian Health',92000,100,'Grace Liu','6 Nov'],['AI document search','Harbor Finance',40000,100,'Ava Grant','14 Oct']],
+  Lost: [['ERP integration','Ironclad Manufacturing',75000,0,'Tom Becker','3 Sep'],['Lab data portal','Westbrook University',22000,0,'Dana Okafor','19 Jun']]
+};
+const meta = { New:['#06D6A0','#073B4C',42000,'US$4,200 expected'], Qualified:['#FFC145','#073B4C',107000,'US$26,750 expected'], Proposal:['#F78C6B','#073B4C',276000,'US$138,000 expected'], Negotiation:['#118AB2','#fff',270000,'US$202,500 expected'], Won:['#073B4C','#fff',567000,'Closed, last 12 months'], Lost:['#CDD8DB','#073B4C',97000,'Closed, last 12 months'] };
+board.innerHTML = Object.keys(deals).map(k => {
+  const [c, tc, v, x] = meta[k], closed = k === 'Won' || k === 'Lost';
+  return `<div class="${closed?'closed':''}"><div class="colh"><div class="n"><span class="stagepill" style="background:${c};color:${tc}">${k}</span><span class="cnt">${k==='Won'?10:deals[k].length}</span></div><div class="v">${fmt(v)}</div><div class="x">${x}</div></div>` +
+  deals[k].map((d, i) => `<div class="card ${d[6]?'late':''} ${k==='New'&&i===0?'lift':''}"><div class="o">${d[1]}</div><div class="t">${d[0]}</div><div class="vv">${fmt(d[2])}</div>
+    <div class="prob"><div class="track"><i style="width:${d[3]}%;background:${c==='#CDD8DB'?'#9FB6BD':c}"></i></div>${d[3]}%</div>
+    <div class="f"><span>${d[4]}</span>${d[6]?`<span class="pill r">Late · ${d[5]}</span>`:`<span class="date">${d[5]}</span>`}</div></div>`).join('') +
+  (k==='Qualified'?'<div class="ghost"></div>':'') + (k==='Won'?'<div class="addc">8 more won deals</div>':'') + `<div class="addc" style="margin-top:12px">+ Add deal</div></div>`;
+}).join('');
+</script>
+</body>
+</html>

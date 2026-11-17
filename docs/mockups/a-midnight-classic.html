@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup A: Midnight Classic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sea: #06D6A0; --sea-ink: #037F5F; --mari: #FFC145; --mari-ink: #9A6700; --coral: #F78C6B;
+    --cer: #118AB2; --rasp: #EF476F; --mid: #073B4C; --mist: #CDD8DB; --page: #F0F4F5;
+    --muted: #5B7A85; --line: #E3EBED;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: "Instrument Sans", sans-serif; color: var(--mid); background: #DDE5E7; font-size: 14px; }
+  .mono { font-family: "JetBrains Mono", monospace; }
+  .screen { width: 1440px; min-height: 960px; margin: 0 auto 40px; display: flex; background: var(--page); overflow: hidden; }
+  .caption { width: 1440px; margin: 32px auto 12px; font-family: "Instrument Serif", serif; font-size: 26px; color: var(--mid); }
+
+  /* sidebar */
+  .side { width: 232px; background: var(--mid); color: var(--mist); padding: 24px 16px; display: flex; flex-direction: column; gap: 4px; flex-shrink: 0; }
+  .brand { display: flex; align-items: center; gap: 10px; padding: 0 8px 4px; }
+  .logo { width: 30px; height: 30px; border-radius: 9px; background: var(--sea); display: grid; place-items: center; color: var(--mid); font-weight: 700; }
+  .brand b { font-size: 18px; color: #fff; letter-spacing: -0.01em; }
+  .tag { font-family: "Instrument Serif", serif; font-style: italic; color: var(--mist); opacity: .7; padding: 0 8px 24px 48px; font-size: 14px; }
+  .nav { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; font-weight: 500; }
+  .nav svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
+  .nav.on { background: var(--sea); color: var(--mid); font-weight: 600; }
+  .side .foot { margin-top: auto; padding: 12px; border-radius: 10px; background: rgba(205,216,219,.08); font-size: 12px; line-height: 1.5; }
+
+  main { flex: 1; padding: 28px 32px; overflow: hidden; }
+  .head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+  .head h1 { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
+  .head p { color: var(--muted); margin-top: 2px; }
+  .btn { background: var(--sea); color: var(--mid); border: 0; border-radius: 10px; padding: 10px 16px; font: 600 14px "Instrument Sans"; }
+  .btn.ghost { background: #fff; }
+  .panel { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 1px 2px rgba(7,59,76,.05), 0 4px 16px rgba(7,59,76,.04); }
+  .panel h2 { font-size: 16px; font-weight: 600; display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+  .panel h2 small { font-weight: 500; color: var(--muted); font-size: 12px; }
+  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 20px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+  .grid3 { display: grid; grid-template-columns: 1.55fr 1fr; gap: 20px; }
+
+  .stat .label { color: var(--muted); font-weight: 500; font-size: 13px; display: flex; align-items: center; gap: 8px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .stat .val { font-family: "JetBrains Mono", monospace; font-size: 26px; font-weight: 600; margin: 8px 0 4px; letter-spacing: -0.02em; }
+  .stat .sub { font-size: 12px; color: var(--muted); }
+  .up { color: var(--sea-ink); font-weight: 600; }
+  .alert .val { color: var(--rasp); }
+
+  .funnel-row { display: grid; grid-template-columns: 96px 1fr 150px; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .funnel-row .bar { height: 30px; border-radius: 8px; display: flex; align-items: center; padding-left: 10px; font: 600 12px "JetBrains Mono"; color: var(--mid); }
+  .funnel-row .meta { font-size: 12px; color: var(--muted); text-align: right; }
+  .funnel-row .meta b { color: var(--mid); font-family: "JetBrains Mono"; font-weight: 500; }
+
+  .task { display: grid; grid-template-columns: 18px 1fr auto; gap: 10px; align-items: start; padding: 9px 0; }
+  .task + .task { border-top: 1px solid var(--line); }
+  .box { width: 16px; height: 16px; border-radius: 4px; border: 2px solid var(--mist); margin-top: 2px; }
+  .task .t { font-weight: 500; }
+  .task .s { font-size: 12px; color: var(--muted); }
+  .date { font: 500 12px "JetBrains Mono"; white-space: nowrap; }
+  .od { color: var(--rasp); }
+  .grp { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 6px 0 2px; }
+
+  /* pipeline */
+  .board-sum { display: flex; gap: 32px; }
+  .board-sum div { font-size: 12px; color: var(--muted); }
+  .board-sum b { display: block; font: 600 20px "JetBrains Mono"; color: var(--mid); }
+  .board { display: grid; grid-template-columns: repeat(4, 1fr) 0.85fr 0.85fr; gap: 14px; height: 800px; }
+  .col { background: #E6EDEF; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+  .col.closed { background: #EBF0F1; }
+  .colh { padding: 4px 4px 6px; }
+  .colh .n { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+  .colh .n span.c { margin-left: auto; font: 500 12px "JetBrains Mono"; color: var(--muted); }
+  .colh .m { font: 500 12px "JetBrains Mono"; color: var(--muted); margin-top: 6px; }
+  .colh .m b { color: var(--mid); font-weight: 600; }
+  .card { background: #fff; border-radius: 10px; padding: 12px; box-shadow: 0 1px 2px rgba(7,59,76,.06); }
+  .card .t { font-weight: 600; margin-bottom: 2px; }
+  .card .o { font-size: 12px; color: var(--muted); }
+  .card .r { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+  .card .v { font: 600 13px "JetBrains Mono"; }
+  .card .who { font-size: 12px; color: var(--muted); }
+  .late { background: var(--rasp); color: #fff; font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 999px; }
+  .lated { background: #FDE6EC; color: #B0193F; padding: 2px 6px; border-radius: 6px; }
+  .card.drag { transform: rotate(2deg); box-shadow: 0 12px 28px rgba(7,59,76,.18); }
+  .drop { height: 64px; border-radius: 10px; border: 2px dashed #9FB6BD; }
+  .add { color: var(--muted); font-weight: 500; padding: 8px; text-align: center; border-radius: 8px; }
+  .card.dim { opacity: .8; }
+  svg text { font-family: "JetBrains Mono", monospace; font-size: 11px; fill: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="caption">A · Midnight Classic: the spec as written. Dashboard</div>
+<div class="screen">
+  <aside class="side" id="side1"></aside>
+  <main>
+    <div class="head">
+      <div><h1>Dashboard</h1><p>Tuesday 17 November 2026</p></div>
+      <div style="display:flex;gap:10px"><button class="btn ghost">Log activity</button><button class="btn">Add deal</button></div>
+    </div>
+    <div class="grid4">
+      <div class="panel stat"><div class="label"><span class="dot" style="background:var(--sea)"></span>Open pipeline</div><div class="val">US$695,000</div><div class="sub">8 open deals</div></div>
+      <div class="panel stat"><div class="label"><span class="dot" style="background:var(--mari)"></span>Expected revenue</div><div class="val">US$371,450</div><div class="sub">Weighted by probability of close</div></div>
+      <div class="panel stat"><div class="label"><span class="dot" style="background:var(--coral)"></span>Won this month</div><div class="val">US$92,000</div><div class="sub"><span class="up">+US$52,000</span> on October</div></div>
+      <div class="panel stat alert"><div class="label"><span class="dot" style="background:var(--rasp)"></span>Late deals</div><div class="val">2</div><div class="sub">US$330,000 past its close date</div></div>
+    </div>
+    <div class="grid2">
+      <div class="panel"><h2>Revenue won <small>Last 12 months · US$567,000</small></h2><svg id="line1" width="100%" height="200"></svg></div>
+      <div class="panel"><h2>Deals won <small>Last 12 months · 10 deals</small></h2><svg id="bar1" width="100%" height="200"></svg></div>
+    </div>
+    <div class="grid3">
+      <div class="panel"><h2>Sales funnel <small>Value at each open stage</small></h2><div id="funnel1"></div></div>
+      <div class="panel"><h2>Follow-ups <small>5 open</small></h2><div id="tasks1"></div></div>
+    </div>
+    <div class="panel" style="margin-top:20px"><h2>Recent activity <small>Latest 15</small></h2><div id="act1"></div></div>
+  </main>
+</div>
+
+<div class="caption">A · Midnight Classic: Pipeline</div>
+<div class="screen">
+  <aside class="side" id="side2"></aside>
+  <main>
+    <div class="head">
+      <div><h1>Pipeline</h1>
+        <div class="board-sum" style="margin-top:10px">
+          <div>Open value<b>US$695,000</b></div><div>Expected revenue<b>US$371,450</b></div><div>Open deals<b>8</b></div>
+        </div>
+      </div>
+      <button class="btn">Add deal</button>
+    </div>
+    <div class="board" id="board"></div>
+  </main>
+</div>
+
+<script>
+const icons = {
+  Dashboard: '<path d="M3 13h8V3H3zM13 21h8V11h-8zM3 21h8v-6H3zM13 3v6h8V3z"/>',
+  Pipeline: '<rect x="3" y="4" width="5" height="16" rx="1"/><rect x="10" y="4" width="5" height="11" rx="1"/><rect x="17" y="4" width="4" height="7" rx="1"/>',
+  Deals: '<path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
+  Organizations: '<path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1M14 9h1M9 13h1M14 13h1M9 17h1M14 17h1"/>',
+  Contacts: '<circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M16 4a4 4 0 0 1 0 8M22 21a7 7 0 0 0-4-6.3"/>'
+};
+function side(active) {
+  return `<div class="brand"><div class="logo">A</div><b>Accountable</b></div><div class="tag">sales, kept in order</div>` +
+    Object.keys(icons).map(k => `<div class="nav ${k===active?'on':''}"><svg viewBox="0 0 24 24">${icons[k]}</svg>${k}</div>`).join('') +
+    `<div class="foot">Data is saved on this computer.<br>Last change 2 minutes ago.</div>`;
+}
+side1.innerHTML = side('Dashboard'); side2.innerHTML = side('Pipeline');
+
+const months = ['Dec','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov'];
+const rev = [38,30,0,24,0,86,45,28,120,64,40,92];
+const won = [1,1,0,1,0,1,1,1,1,1,1,1];
+const wonCount = [1,1,0,1,0,2,1,1,1,1,0,1];
+
+function lineChart(svg, data) {
+  const W = svg.clientWidth, H = 200, L = 44, B = 24, T = 10, max = 140;
+  const x = i => L + i * (W - L - 10) / (data.length - 1), y = v => T + (H - T - B) * (1 - v / max);
+  let s = '';
+  [0, 35, 70, 105, 140].forEach(v => s += `<line x1="${L}" x2="${W-10}" y1="${y(v)}" y2="${y(v)}" stroke="#E3EBED"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end">${v?v+'k':'0'}</text>`);
+  const pts = data.map((v, i) => `${x(i)},${y(v)}`).join(' ');
+  s += `<defs><linearGradient id="g${svg.id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#06D6A0" stop-opacity=".28"/><stop offset="1" stop-color="#06D6A0" stop-opacity="0"/></linearGradient></defs>`;
+  s += `<polygon points="${x(0)},${y(0)} ${pts} ${x(data.length-1)},${y(0)}" fill="url(#g${svg.id})"/>`;
+  s += `<polyline points="${pts}" fill="none" stroke="#06B386" stroke-width="2.5" stroke-linejoin="round"/>`;
+  data.forEach((v, i) => s += `<circle cx="${x(i)}" cy="${y(v)}" r="${i===11?5:3}" fill="#fff" stroke="#06B386" stroke-width="2"/><text x="${x(i)}" y="${H-6}" text-anchor="middle">${months[i]}</text>`);
+  s += `<rect x="${x(11)-78}" y="${y(92)-40}" width="70" height="28" rx="6" fill="#073B4C"/><text x="${x(11)-43}" y="${y(92)-22}" text-anchor="middle" style="fill:#fff">US$92,000</text>`;
+  svg.innerHTML = s;
+}
+function barChart(svg, data, color) {
+  const W = svg.clientWidth, H = 200, L = 30, B = 24, T = 10, max = 2;
+  const bw = (W - L - 10) / data.length, y = v => T + (H - T - B) * (1 - v / max);
+  let s = '';
+  [0,1,2].forEach(v => s += `<line x1="${L}" x2="${W-10}" y1="${y(v)}" y2="${y(v)}" stroke="#E3EBED"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end">${v}</text>`);
+  data.forEach((v, i) => {
+    const bx = L + i * bw + bw * .22, w = bw * .56;
+    if (v) s += `<rect x="${bx}" y="${y(v)}" width="${w}" height="${y(0)-y(v)}" rx="5" fill="${color}"/>`;
+    s += `<text x="${bx + w/2}" y="${H-6}" text-anchor="middle">${months[i]}</text>`;
+  });
+  svg.innerHTML = s;
+}
+lineChart(line1, rev); barChart(bar1, won, '#FFC145');
+
+const stages = [
+  ['New', '#118AB2', 42000, 2, 4200], ['Qualified', '#06D6A0', 107000, 2, 26750],
+  ['Proposal', '#FFC145', 276000, 2, 138000], ['Negotiation', '#F78C6B', 270000, 2, 202500]];
+const fmt = n => 'US$' + n.toLocaleString('en-US');
+funnel1.innerHTML = stages.map(([n, c, v, k, e]) => `<div class="funnel-row"><div style="font-weight:600">${n}</div>
+  <div style="background:#F0F4F5;border-radius:8px"><div class="bar" style="width:${Math.max(26, v/276000*100)}%;background:${c};${c==='#118AB2'?'color:#fff':''}">${fmt(v)}</div></div>
+  <div class="meta">${k} deals · <b>${fmt(e)}</b> exp.</div></div>`).join('') +
+  `<div style="font-size:12px;color:var(--muted);margin-top:6px">Click a stage to open it on the pipeline.</div>`;
+
+const overdue = [['Send revised SOW', 'Meridian Health · Cloud migration', '12 Nov'], ['Call about budget sign-off', 'Bluepeak Retail · Data platform', '14 Nov']];
+const soon = [['Demo the support assistant', 'Westbrook University · Dana Okafor', '18 Nov'], ['Check security review', 'Harbor Finance · Managed IT', '20 Nov'], ['Share pilot results', 'Northwind Logistics · Sam Patel', '24 Nov']];
+const task = (t, od) => `<div class="task"><div class="box"></div><div><div class="t">${t[0]}</div><div class="s">${t[1]}</div></div><div class="date ${od?'od':''}">${t[2]}</div></div>`;
+tasks1.innerHTML = `<div class="grp" style="color:var(--rasp)">Overdue</div>` + overdue.map(t => task(t, 1)).join('') +
+  `<div class="grp" style="margin-top:10px">Coming up</div>` + soon.map(t => task(t)).join('');
+
+const acts = [
+  ['stage', 'Moved from Negotiation to Won', 'Endpoint security rollout · Meridian Health', '6 Nov'],
+  ['call', 'Call with Raj Mehta about the managed IT scope', 'Harbor Finance · Managed IT contract', '5 Nov'],
+  ['email', 'Sent pricing options for the route optimisation pilot', 'Northwind Logistics · Sam Patel', '3 Nov'],
+  ['note', 'Lena wants a pilot in two stores before committing', 'Bluepeak Retail · Lena Cho', '2 Nov'],
+  ['stage', 'Moved from Qualified to Proposal', 'Route optimisation AI · Northwind Logistics', '29 Oct']];
+const aIcon = { stage: ['#E6F9F3', '#037F5F', '→'], call: ['#FFF3DA', '#9A6700', '☏'], email: ['#E3F1F7', '#118AB2', '@'], note: ['#FEEBE4', '#B4502F', '✎'] };
+act1.innerHTML = '<div style="display:grid;grid-template-columns:1fr 1fr;column-gap:32px">' + acts.map(a => `<div class="task" style="grid-template-columns:30px 1fr auto;border:0"><div style="width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-weight:700;background:${aIcon[a[0]][0]};color:${aIcon[a[0]][1]}">${aIcon[a[0]][2]}</div><div><div class="t">${a[1]}</div><div class="s">${a[2]}</div></div><div class="date" style="color:var(--muted)">${a[3]}</div></div>`).join('') + '</div>';
+
+const deals = {
+  New: [['Store analytics pilot', 'Bluepeak Retail', 24000, 'Lena Cho', '30 Jan'], ['Campus helpdesk AI', 'Westbrook University', 18000, 'Dana Okafor', '15 Feb']],
+  Qualified: [['Fraud model review', 'Harbor Finance', 65000, 'Raj Mehta', '18 Dec'], ['Plant network upgrade', 'Ironclad Manufacturing', 42000, 'Tom Becker', '9 Jan']],
+  Proposal: [['Cloud migration', 'Meridian Health', 180000, 'Grace Liu', '10 Nov', 1], ['Route optimisation AI', 'Northwind Logistics', 96000, 'Sam Patel', '4 Dec']],
+  Negotiation: [['Data platform', 'Bluepeak Retail', 150000, 'Marco Ruiz', '31 Oct', 1], ['Managed IT contract', 'Harbor Finance', 120000, 'Raj Mehta', '28 Nov']],
+  Won: [['Endpoint security rollout', 'Meridian Health', 92000, 'Grace Liu', '6 Nov'], ['AI document search', 'Harbor Finance', 40000, 'Ava Grant', '14 Oct'], ['Warehouse Wi-Fi', 'Northwind Logistics', 64000, 'Sam Patel', '22 Sep']],
+  Lost: [['ERP integration', 'Ironclad Manufacturing', 75000, 'Tom Becker', '3 Sep'], ['Lab data portal', 'Westbrook University', 22000, 'Dana Okafor', '19 Jun']]
+};
+const colMeta = { New: ['#118AB2', 42000, 4200], Qualified: ['#06D6A0', 107000, 26750], Proposal: ['#FFC145', 276000, 138000], Negotiation: ['#F78C6B', 270000, 202500], Won: ['#073B4C', 567000, '10 deals'], Lost: ['#9FB6BD', 97000, '2 deals'] };
+board.innerHTML = Object.keys(deals).map(st => {
+  const [c, v, e] = colMeta[st], closed = st === 'Won' || st === 'Lost', list = deals[st];
+  const cards = list.map((d, i) => `<div class="card ${closed?'dim':''} ${st==='Qualified'&&i===1?'drag':''}"><div class="t">${d[0]}</div><div class="o">${d[1]}</div>
+    <div class="r"><span class="v">${fmt(d[2])}</span>${d[5]?'<span class="late">Late</span>':''}</div>
+    <div class="r" style="margin-top:6px"><span class="who">${d[3]}</span><span class="date ${d[5]?'lated':''}">${d[4]}</span></div></div>`).join('');
+  return `<div class="col ${closed?'closed':''}"><div class="colh"><div class="n"><span class="dot" style="background:${c}"></span>${st}<span class="c">${closed&&st==='Won'?10:closed?2:list.length}</span></div>
+    <div class="m">${closed ? `Closed · <b>${fmt(v)}</b>` : `<b>${fmt(v)}</b> · ${fmt(e)} exp.`}</div></div>${cards}${st==='Proposal'?'<div class="drop"></div>':''}${closed&&st==='Won'?'<div class="add">7 more</div>':''}<div class="add">+ Add deal</div></div>`;
+}).join('');
+</script>
+</body>
+</html>
