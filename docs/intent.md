@@ -39,7 +39,7 @@ From any contact or deal you can log an activity (a note, call or email) and giv
 
 ### Sample data
 
-Accountable comes with realistic sample data, so every screen looks alive the first time it starts. It's the pipeline of a company selling IT, software and AI solutions, and it's kept small: about 6 organizations, 15 contacts, 12 deals and 30 activities. It includes customer organizations across several industries, contacts at every status, deals at every stage (including deals won and lost over the past months, deals expected to close in the months ahead and a few running late), and activities with some follow-ups due soon and some overdue.
+Accountable comes with realistic sample data, so every screen looks alive the first time it starts. It's the pipeline of a company selling IT, software and AI solutions, and it's kept small: about 6 organizations, 15 contacts, 20 deals (enough won deals that most months on the dashboard's charts have data) and 40 activities. It includes customer organizations across several industries, contacts at every status, deals at every stage (including deals won and lost over the past months, deals expected to close in the months ahead and a few running late), and activities with some follow-ups due soon and some overdue.
 
 ### Look and feel
 
