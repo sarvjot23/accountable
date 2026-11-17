@@ -1,0 +1,60 @@
+.close {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.late {
+  color: var(--raspberry-ink);
+  font-weight: 600;
+}
+
+.none {
+  color: var(--muted);
+}
+
+.selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 22px;
+  padding-top: 18px;
+  box-shadow: inset 0 1px 0 var(--line);
+  align-items: center;
+}
+
+.selectorLabel {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+  margin-right: 6px;
+}
+
+.stageButton {
+  border: 0;
+  border-radius: var(--radius-pill);
+  padding: 7px 14px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  background: var(--page);
+  color: var(--midnight);
+  transition:
+    background-color var(--fast) ease,
+    color var(--fast) ease;
+}
+
+.stageButton:hover:not(:disabled) {
+  background: #e3ebed;
+}
+
+.stageButton:disabled {
+  cursor: default;
+}
+
+.manual {
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 12px;
+}

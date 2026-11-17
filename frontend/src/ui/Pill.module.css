@@ -1,0 +1,41 @@
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: var(--radius-pill);
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.green {
+  background: var(--sea-tint);
+  color: var(--sea-ink);
+}
+
+.red {
+  background: var(--raspberry-tint);
+  color: var(--raspberry-ink);
+}
+
+.amber {
+  background: var(--marigold-tint);
+  color: var(--marigold-ink);
+}
+
+.blue {
+  background: var(--cerulean-tint);
+  color: #0b6a8a;
+}
+
+.neutral {
+  background: var(--page);
+  color: var(--midnight);
+}
+
+.dark {
+  background: var(--midnight);
+  color: #fff;
+}

@@ -1,0 +1,11 @@
+.empty {
+  padding: 28px 16px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.action {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+}

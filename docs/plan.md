@@ -184,7 +184,7 @@ One row per spec ID. **Built in** is the step (or steps) from Order of work. **P
 | RULE-13 | deals and revenue won by month | P1.6 | B:dashboard/test_dashboard.py |
 | RULE-14 | sales funnel | P1.3, P1.6 | B:deals/test_rules.py, B:dashboard/test_dashboard.py |
 | RULE-15 | one "today" | P1.2 | B:test_clock.py |
-| RULE-16 | rules in feature `rules.py` files, not the frontend, except instant totals | P1.3 | F:features/pipeline/boardTotals.test.ts, W |
+| RULE-16 | rules in feature `rules.py` files, not the frontend, except instant totals | P1.3, P3.4 | F:features/pipeline/boardTotals.test.ts, W |
 | LAY-1 | follows mockup B | P4.5 | W |
 | LAY-2 | top bar | P2.1 | E:layout.spec.ts |
 | LAY-3 | global search | P2.6 | E:layout.spec.ts |
@@ -242,7 +242,7 @@ One row per spec ID. **Built in** is the step (or steps) from Order of work. **P
 | PIPE-12 | roll back on a failed save | P3.4 | F:features/pipeline/PipelinePage.test.tsx |
 | PIPE-13 | "+" adds a deal at that stage | P3.3 | E:pipeline.spec.ts |
 | PIPE-14 | card click opens the deal | P3.3 | E:pipeline.spec.ts |
-| PIPE-15 | positions and renumbering | P1.3 | B:deals/test_rules.py, F:features/pipeline/positions.test.ts |
+| PIPE-15 | positions and renumbering | P1.3, P3.4 | B:deals/test_rules.py, F:features/pipeline/positions.test.ts |
 | PIPE-16 | one `move` call | P1.4 | B:deals/test_api.py |
 | FORM-1 | sheets, validation, Save disabled while saving | P2.3 | F:features/deals/DealForm.test.tsx |
 | FORM-2 | searchable pickers | P2.4 | E:deals.spec.ts |
@@ -306,7 +306,7 @@ It reads `docs/spec.md`, the Traceability table above, the test files and `docs/
 1. an ID is defined twice in the spec, or not in the `PREFIX-N` form;
 2. a spec ID has no row in the Traceability table, or a row names an ID the spec doesn't define (struck-through dropped IDs are skipped);
 3. a row has no step in **Built in** or no entry in **Proved by**, or names a step that isn't in Order of work;
-4. for every row whose latest step is in a phase up to `--through-phase N`, a file named in **Proved by** is missing or doesn't mention the ID;
+4. a file named in **Proved by** is missing or doesn't mention the ID, once it is due: at the later of the row's latest step and the phase that writes that kind of test (backend tests from phase 1, frontend tests from phase 2, end-to-end tests in P5.1 and the walk-through in P5.4), up to `--through-phase N`;
 5. any test file or the walk-through mentions an ID the spec doesn't define.
 
 IDs are matched whole, so `RULE-1` never matches `RULE-14`. `test:trace` starts at `--through-phase 1` and is raised at the end of each phase, reaching 5 when the MVP is done, when every ID must be proved. `scripts/check-trace.test.mjs` tests the script itself with small sample files: a missing ID, an unknown ID, a duplicate, a proof file that doesn't mention its ID, and `RULE-1` against `RULE-14`.

@@ -1,0 +1,64 @@
+.trigger {
+  width: 100%;
+  min-height: 42px;
+  border: 0;
+  background: var(--page);
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.trigger:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--cerulean);
+}
+
+.trigger svg {
+  width: 16px;
+  height: 16px;
+  color: var(--muted);
+}
+
+.content {
+  width: var(--radix-select-trigger-width);
+  background: var(--panel);
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(7, 59, 76, 0.18);
+  z-index: 40;
+  animation: pop var(--fast) ease;
+}
+
+.viewport {
+  padding: 6px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  outline: none;
+}
+
+.item[data-highlighted] {
+  background: var(--page);
+}
+
+.check {
+  width: 15px;
+  height: 15px;
+  color: var(--sea-ink);
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+  }
+}

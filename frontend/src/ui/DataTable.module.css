@@ -1,0 +1,132 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--panel);
+  border-radius: var(--radius-pill);
+  padding: 0 16px;
+  width: 300px;
+  height: 40px;
+}
+
+.search:focus-within {
+  box-shadow: 0 0 0 2px var(--cerulean);
+}
+
+.search svg {
+  width: 16px;
+  height: 16px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.search input {
+  border: 0;
+  background: transparent;
+  outline: none;
+  flex: 1;
+  min-width: 0;
+}
+
+.panel {
+  background: var(--panel);
+  border-radius: var(--radius-panel);
+  padding: 8px 12px;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  padding: 12px;
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 12px;
+  box-shadow: inset 0 1px 0 var(--line);
+  vertical-align: middle;
+}
+
+.numeric {
+  text-align: right !important;
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+
+th.numeric {
+  font-family: var(--font-sans);
+}
+
+th.numeric .sort {
+  margin-left: auto;
+}
+
+.sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.sort:hover {
+  color: var(--midnight);
+}
+
+.sort svg {
+  width: 14px;
+  height: 14px;
+}
+
+.row {
+  cursor: pointer;
+  transition: background-color var(--fast) ease;
+}
+
+.row:hover td {
+  background: #f7fafa;
+}
+
+.row td:first-child {
+  border-radius: 12px 0 0 12px;
+}
+
+.row td:last-child {
+  border-radius: 0 12px 12px 0;
+}
+
+.menu {
+  width: 44px;
+  text-align: right;
+}
+
+.noMatch {
+  padding: 24px 12px;
+  text-align: center;
+  color: var(--muted);
+}

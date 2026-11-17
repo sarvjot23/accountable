@@ -1,0 +1,39 @@
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  border: 0;
+  background: var(--panel);
+  border-radius: var(--radius-pill);
+  padding: 8px 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition:
+    background-color var(--fast) ease,
+    color var(--fast) ease;
+}
+
+.chip:hover:not(.on):not(.late) {
+  background: #e3ebed;
+}
+
+.on {
+  background: var(--midnight);
+  color: #fff;
+}
+
+.count {
+  font: 500 12px var(--font-mono);
+  opacity: 0.8;
+}
+
+.late {
+  background: var(--raspberry);
+  color: #fff;
+}

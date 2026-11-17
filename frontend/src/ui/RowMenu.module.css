@@ -1,0 +1,64 @@
+.trigger {
+  border: 0;
+  background: transparent;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background-color var(--fast) ease;
+}
+
+.trigger:hover,
+.trigger[data-state='open'] {
+  background: var(--page);
+  color: var(--midnight);
+}
+
+.trigger svg {
+  width: 18px;
+  height: 18px;
+}
+
+.menu {
+  background: var(--panel);
+  border-radius: 14px;
+  padding: 6px;
+  min-width: 140px;
+  box-shadow: 0 12px 32px rgba(7, 59, 76, 0.16);
+  z-index: 30;
+  animation: pop var(--fast) ease;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  outline: none;
+  font-weight: 500;
+}
+
+.item svg {
+  width: 15px;
+  height: 15px;
+}
+
+.item[data-highlighted] {
+  background: var(--page);
+}
+
+.danger {
+  color: var(--raspberry-ink);
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}

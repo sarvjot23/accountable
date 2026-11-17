@@ -1,0 +1,58 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 59, 76, 0.32);
+  animation: fade var(--slow) ease;
+}
+
+.dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(460px, calc(100vw - 32px));
+  background: var(--panel);
+  border-radius: var(--radius-panel);
+  padding: 28px;
+  z-index: 20;
+  animation: fade var(--slow) ease;
+}
+
+.dialog:focus {
+  outline: none;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1.15;
+}
+
+.text {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.error {
+  margin-top: 12px;
+  color: var(--raspberry-ink);
+}
+
+.buttons {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.cancel {
+  background: var(--page);
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}

@@ -1,0 +1,11 @@
+.state,
+.error {
+  background: var(--panel);
+  border-radius: var(--radius-panel);
+  padding: 26px;
+  color: var(--muted);
+}
+
+.error {
+  color: var(--raspberry-ink);
+}

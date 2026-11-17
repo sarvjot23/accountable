@@ -1,0 +1,282 @@
+.top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.topActions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.greeting {
+  min-width: 0;
+}
+
+.hello {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 44px;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+}
+
+.hello em {
+  color: var(--sea-ink);
+}
+
+.today {
+  color: var(--muted);
+  margin-top: 6px;
+  font-size: 15px;
+}
+
+/* Figures strip: one wide panel split into four (DASH-3 to DASH-6). */
+.strip {
+  background: var(--panel);
+  border-radius: var(--radius-panel);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  overflow: hidden;
+  margin-bottom: var(--gap);
+}
+
+.figure {
+  padding: 26px 28px;
+  color: inherit;
+  min-width: 0;
+}
+
+.figure + .figure {
+  box-shadow: inset 1px 0 0 var(--line);
+}
+
+.figureLink {
+  display: block;
+  transition: background-color var(--fast) ease;
+}
+
+.figureLink:hover {
+  text-decoration: none;
+  background: #f7fafa;
+}
+
+.label {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.number {
+  font: 600 34px var(--font-mono);
+  letter-spacing: -0.03em;
+  margin: 10px 0 8px;
+  white-space: nowrap;
+}
+
+/* Raspberry itself: at 34px semibold it is large text, and 3.6:1 passes AA for that. */
+.lateNumber {
+  color: var(--raspberry);
+}
+
+.small {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.meter {
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--page);
+  margin-top: 14px;
+  overflow: hidden;
+}
+
+.meter i {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+}
+
+.rowTwo {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: var(--gap);
+  margin-bottom: var(--gap);
+}
+
+.rowThree {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.chart {
+  width: 100%;
+  min-width: 0;
+}
+
+.tooltip {
+  background: var(--midnight);
+  color: #fff;
+  border-radius: 10px;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.tooltip span {
+  color: var(--sea-mist);
+}
+
+.tooltip b {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Funnel (DASH-8) */
+.funnel svg {
+  display: block;
+  overflow: visible;
+}
+
+.segment {
+  cursor: pointer;
+  outline: none;
+}
+
+.segment path {
+  transition: opacity var(--fast) ease;
+}
+
+.segment:hover path {
+  opacity: 0.88;
+}
+
+.segment:focus-visible path {
+  stroke: var(--cerulean);
+  stroke-width: 3px;
+}
+
+.segmentName {
+  font: 600 14px var(--font-sans);
+}
+
+.segmentValue {
+  font: 600 14px var(--font-mono);
+  fill: var(--midnight);
+}
+
+.segmentMeta {
+  font: 400 11px var(--font-mono);
+  fill: var(--muted);
+}
+
+.funnelFoot {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 14px;
+  padding-top: 12px;
+  box-shadow: inset 0 1px 0 var(--line);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.funnelFoot b {
+  font-family: var(--font-mono);
+  color: var(--midnight);
+}
+
+/* Lists: follow-ups and recent activity */
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Fifteen recent activities scroll inside their panel, so the row keeps the mockup's height. */
+.scrolling {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+  padding: 11px 0;
+  align-items: flex-start;
+}
+
+.row + .row {
+  box-shadow: inset 0 1px 0 var(--line);
+}
+
+.rowText {
+  min-width: 0;
+  flex: 1;
+}
+
+.rowTitle {
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.rowSub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.rowDate {
+  margin-left: auto;
+  font: 500 12px var(--font-mono);
+  white-space: nowrap;
+  color: var(--muted);
+  padding-top: 2px;
+}
+
+.overdueDate {
+  color: var(--raspberry-ink);
+  font-weight: 600;
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.showAll {
+  border: 0;
+  background: var(--page);
+  border-radius: var(--radius-pill);
+  padding: 8px 14px;
+  font-weight: 500;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.showAll:hover {
+  background: #e3ebed;
+}
+
+@media (max-width: 1180px) {
+  .number {
+    font-size: 26px;
+  }
+
+  .figure {
+    padding: 22px 20px;
+  }
+}

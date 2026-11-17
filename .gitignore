@@ -43,6 +43,10 @@ htmlcov/
 coverage.xml
 coverage/
 
+# Accountable's own data and build output
+backend/data/
+frontend/dist/
+
 # Local databases
 *.db
 *.sqlite

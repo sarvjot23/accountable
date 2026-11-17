@@ -1,0 +1,34 @@
+.viewport {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 50;
+  outline: none;
+}
+
+.toast {
+  background: var(--midnight);
+  color: #fff;
+  border-radius: var(--radius-pill);
+  padding: 11px 20px;
+  font-weight: 500;
+  animation: rise var(--slow) ease;
+}
+
+.error {
+  background: var(--raspberry-ink);
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+}

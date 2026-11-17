@@ -1,0 +1,28 @@
+[project]
+name = "accountable"
+version = "0.1.0"
+description = "Accountable: a sales CRM for one salesperson, running locally"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.34",
+    "sqlalchemy>=2.0",
+    "alembic>=1.14",
+    "pydantic>=2.10",
+    "email-validator>=2.2",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "httpx>=0.28",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["backend/tests"]
+pythonpath = ["backend"]
+addopts = "-q --import-mode=importlib"
+filterwarnings = ["ignore:Using `httpx` with `starlette.testclient` is deprecated"]

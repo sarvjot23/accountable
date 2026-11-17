@@ -1,0 +1,213 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.openOnly {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.colHead {
+  background: var(--panel);
+  border-radius: var(--radius-card);
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.colTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.stagePill {
+  border-radius: var(--radius-pill);
+  padding: 4px 12px;
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.count {
+  font: 500 12px var(--font-mono);
+  color: var(--muted);
+}
+
+.colValue {
+  font: 600 18px var(--font-mono);
+  letter-spacing: -0.02em;
+  margin-top: 10px;
+}
+
+.colSub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 72px;
+  border-radius: var(--radius-card);
+  transition: background-color var(--fast) ease;
+}
+
+.cards[data-over] {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.card {
+  background: var(--panel);
+  border-radius: var(--radius-card);
+  padding: 16px;
+  cursor: grab;
+  touch-action: none;
+  transition: box-shadow var(--fast) ease;
+}
+
+.card:hover {
+  box-shadow: 0 6px 18px rgba(7, 59, 76, 0.08);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--cerulean);
+  outline-offset: 2px;
+}
+
+.late {
+  box-shadow: 0 0 0 2px var(--raspberry-ring);
+}
+
+.late:hover {
+  box-shadow:
+    0 0 0 2px var(--raspberry-ring),
+    0 6px 18px rgba(7, 59, 76, 0.08);
+}
+
+/* Where the card will land: a striped space (PIPE-7). */
+.placeholder {
+  background: repeating-linear-gradient(45deg, #e3ebed 0 8px, #edf2f3 8px 16px);
+  box-shadow: none;
+}
+
+.placeholder > * {
+  visibility: hidden;
+}
+
+/* The card being dragged lifts and tilts slightly (PIPE-7). */
+.lifted {
+  cursor: grabbing;
+  box-shadow: 0 18px 36px rgba(7, 59, 76, 0.18);
+  transform: translateY(-4px) rotate(-1.5deg);
+}
+
+.org {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.name {
+  font-weight: 600;
+  font-size: 15px;
+  margin: 3px 0 12px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.value {
+  font: 600 16px var(--font-mono);
+}
+
+.prob {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0 12px;
+  font: 500 11px var(--font-mono);
+  color: var(--muted);
+}
+
+.track {
+  flex: 1;
+  height: 5px;
+  border-radius: var(--radius-pill);
+  background: var(--page);
+  overflow: hidden;
+}
+
+.track i {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+}
+
+.foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.contact {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.date {
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+
+.emptyCol {
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  padding: 24px 8px;
+}
+
+.more,
+.add {
+  border: 0;
+  width: 100%;
+  text-align: center;
+  padding: 12px;
+  border-radius: var(--radius-card);
+  color: var(--muted);
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition:
+    background-color var(--fast) ease,
+    color var(--fast) ease;
+}
+
+.more:hover,
+.add:hover {
+  background: var(--panel);
+  color: var(--midnight);
+}
+
+.add svg {
+  width: 15px;
+  height: 15px;
+}

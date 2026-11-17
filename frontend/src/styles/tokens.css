@@ -1,0 +1,49 @@
+/* Brand tokens (LOOK-1 to LOOK-5), from the brand skill and mockup B "Open Air". */
+:root {
+  /* Brand colors */
+  --sea: #06d6a0;
+  --sea-ink: #027055; /* Sea Green darkened for small text on white and on its tint */
+  --sea-tint: #dcf8ef;
+  --marigold: #ffc145;
+  --marigold-ink: #8a5f00; /* Marigold darkened for small text on white */
+  --marigold-tint: #fff3da;
+  --marigold-deep: #f0a800;
+  --coral: #f78c6b;
+  --coral-tint: #feebe4;
+  --cerulean: #118ab2;
+  --cerulean-tint: #e3f1f7;
+  --cerulean-ink: #0b6e8f; /* Cerulean darkened for link text, AA on white and on the page */
+  --raspberry: #ef476f;
+  --raspberry-ink: #b0193f;
+  --raspberry-strong: #c9264e; /* Raspberry deep enough for white button text (WCAG AA) */
+  --raspberry-tint: #fde6ec;
+  --raspberry-ring: #f9b7c7;
+  --midnight: #073b4c;
+  --sea-mist: #cdd8db;
+
+  /* Surfaces */
+  --page: #f0f4f5;
+  --panel: #ffffff;
+  --line: #e6edef;
+  --track: #f3f6f7;
+  --muted: #4f6e79; /* secondary text, AA on white and on the page */
+
+  /* Type */
+  --font-sans: 'Instrument Sans', system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Shape and space */
+  --radius-panel: 20px;
+  --radius-card: 16px;
+  --radius-pill: 999px;
+  --gap: 24px;
+  --gutter: 40px;
+  --topbar: 68px;
+
+  /* Motion (LOOK-7) */
+  --fast: 150ms;
+  --slow: 200ms;
+
+  --focus: 0 0 0 3px var(--panel), 0 0 0 5px var(--cerulean);
+}

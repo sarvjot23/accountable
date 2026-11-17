@@ -1,0 +1,90 @@
+.bar {
+  height: var(--topbar);
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 0 var(--gutter);
+  background: var(--panel);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--midnight);
+  flex-shrink: 0;
+}
+
+.brand:hover {
+  text-decoration: none;
+}
+
+.logo {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--midnight);
+  display: grid;
+  place-items: center;
+}
+
+.logo i {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--sea);
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tab {
+  display: block;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  color: var(--muted);
+  font-weight: 500;
+  transition:
+    background-color var(--fast) ease,
+    color var(--fast) ease;
+}
+
+.tab:hover {
+  text-decoration: none;
+  color: var(--midnight);
+  background: var(--page);
+}
+
+.tab.on {
+  background: var(--midnight);
+  color: #fff;
+}
+
+.right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+@media (max-width: 1180px) {
+  .bar {
+    gap: 16px;
+    padding: 0 24px;
+  }
+
+  .tab {
+    padding: 8px 10px;
+  }
+}
