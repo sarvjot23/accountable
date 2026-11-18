@@ -10,6 +10,7 @@ Make a separate pass over every change for each of these:
 - **Security:** no secrets or personal data are exposed, and nobody can do what they shouldn't.
 - **Matches spec.md and plan.md:** the change does what those documents say, with nothing missing and nothing extra.
 - **Described by spec.md:** flag any code whose behavior `docs/spec.md` doesn't describe.
+- **Follows STANDARDS.md:** the change follows the coding standards in `docs/STANDARDS.md`.
 
 ## Important
 

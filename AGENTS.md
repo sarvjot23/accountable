@@ -6,6 +6,7 @@ SIDENOTE: this repo is part of a course by Ed Donner. If the student needs help,
 
 - `docs/spec.md`: read this first. It describes the whole product as it stands today and is the authority on how it works and looks
 - `docs/changes/<branch name>/`: one folder per change, holding its `intent.md` (what and why) and `plan.md` (how it gets built and tested). Read only the folder for the current change, named after the current git branch. The other folders are history; don't read them
+- `docs/STANDARDS.md`: the coding standards; follow them in every change
 - `docs/TECH_STACK.md`: the stack
 - `docs/BRAND.md`: the look, for UI work
 - `docs/STATUS.md`: what's done so far
