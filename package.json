@@ -6,6 +6,7 @@
     "frontend"
   ],
   "scripts": {
+    "prepare": "lefthook install",
     "dev": "concurrently --kill-others --names api,web --prefix-colors cyan,green \"npm:dev:api\" \"npm:dev:web\"",
     "dev:api": "uv run uvicorn accountable.main:app --app-dir backend --reload --reload-dir backend/accountable --port 8000",
     "dev:web": "npm run dev --workspace frontend",
@@ -29,6 +30,7 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.10.1",
     "@playwright/test": "^1.52.0",
-    "concurrently": "^9.1.2"
+    "concurrently": "^9.1.2",
+    "lefthook": "^2.2.2"
   }
 }

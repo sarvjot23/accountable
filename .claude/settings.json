@@ -10,6 +10,30 @@
       "Bash(git push *)"
     ]
   },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit|NotebookEdit|Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/protect-env.mjs\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/check-on-stop.mjs\"",
+            "timeout": 600
+          }
+        ]
+      }
+    ]
+  },
   "enabledPlugins": {
     "frontend-design@anthropic-plugin-directory": true
   }

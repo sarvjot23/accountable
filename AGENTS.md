@@ -22,6 +22,11 @@ Run `npm run check` from the repo root before you call any work done, and fix wh
 
 `npm run check:quick` runs the same without the end-to-end tests, for quick feedback while you work. `npm run format` fixes the formatting.
 
+Hooks run some of this for you:
+
+- Git pre-commit (lefthook, `lefthook.yml`): formats the staged files, then runs `lint`, `typecheck` and gitleaks on the staged changes. No tests
+- Claude Code (`.claude/settings.json`): when you finish a turn, `npm run check:quick` runs and any failure is sent back to you once to fix. Edits to `.env` are blocked; ask the user to change it
+
 ## Testing
 
 `npm test` runs every test in order and stops at the first failure:
