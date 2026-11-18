@@ -37,7 +37,7 @@ function repo(files) {
 test('a complete sample passes', () => {
   const root = repo({
     'docs/spec.md': SPEC,
-    'docs/plan.md': plan(GOOD_ROWS),
+    'docs/changes/mvp/plan.md': plan(GOOD_ROWS),
     'backend/tests/test_a.py': '# RULE-1\n# RULE-14\n',
   });
   assert.deepEqual(checkTrace({ root, throughPhase: 1 }), []);
@@ -46,7 +46,7 @@ test('a complete sample passes', () => {
 test('a spec ID with no row is reported', () => {
   const root = repo({
     'docs/spec.md': SPEC,
-    'docs/plan.md': plan([GOOD_ROWS[0]]),
+    'docs/changes/mvp/plan.md': plan([GOOD_ROWS[0]]),
     'backend/tests/test_a.py': '# RULE-1\n',
   });
   const problems = checkTrace({ root, throughPhase: 1 });
@@ -56,7 +56,7 @@ test('a spec ID with no row is reported', () => {
 test('a row naming an unknown ID is reported', () => {
   const root = repo({
     'docs/spec.md': SPEC,
-    'docs/plan.md': plan([...GOOD_ROWS, '| RULE-9 | nine | P1.1 | B:test_a.py |']),
+    'docs/changes/mvp/plan.md': plan([...GOOD_ROWS, '| RULE-9 | nine | P1.1 | B:test_a.py |']),
     'backend/tests/test_a.py': '# RULE-1 RULE-14\n',
   });
   const problems = checkTrace({ root, throughPhase: 1 });
@@ -66,7 +66,7 @@ test('a row naming an unknown ID is reported', () => {
 test('a test mentioning an unknown ID is reported', () => {
   const root = repo({
     'docs/spec.md': SPEC,
-    'docs/plan.md': plan(GOOD_ROWS),
+    'docs/changes/mvp/plan.md': plan(GOOD_ROWS),
     'backend/tests/test_a.py': '# RULE-1 RULE-14 RULE-77\n',
   });
   const problems = checkTrace({ root, throughPhase: 1 });
@@ -76,7 +76,7 @@ test('a test mentioning an unknown ID is reported', () => {
 test('a duplicate ID in the spec is reported', () => {
   const root = repo({
     'docs/spec.md': `${SPEC}- **[RULE-1]** again\n`,
-    'docs/plan.md': plan(GOOD_ROWS),
+    'docs/changes/mvp/plan.md': plan(GOOD_ROWS),
     'backend/tests/test_a.py': '# RULE-1 RULE-14\n',
   });
   const problems = checkTrace({ root, throughPhase: 1 });
@@ -86,7 +86,7 @@ test('a duplicate ID in the spec is reported', () => {
 test('an ID not in the PREFIX-N form is reported', () => {
   const root = repo({
     'docs/spec.md': `${SPEC}- **[Rule-x]** odd\n`,
-    'docs/plan.md': plan(GOOD_ROWS),
+    'docs/changes/mvp/plan.md': plan(GOOD_ROWS),
     'backend/tests/test_a.py': '# RULE-1 RULE-14\n',
   });
   const problems = checkTrace({ root, throughPhase: 1 });
@@ -96,7 +96,7 @@ test('an ID not in the PREFIX-N form is reported', () => {
 test('a proof file that does not mention its ID is reported', () => {
   const root = repo({
     'docs/spec.md': SPEC,
-    'docs/plan.md': plan(GOOD_ROWS),
+    'docs/changes/mvp/plan.md': plan(GOOD_ROWS),
     'backend/tests/test_a.py': '# RULE-14 only\n',
   });
   const problems = checkTrace({ root, throughPhase: 1 });
@@ -114,7 +114,7 @@ test('a missing proof file is reported only once its phase is reached', () => {
   const rows = ['| RULE-1 | one | P2.1 | B:test_b.py |', '| RULE-14 | fourteen | P1.1 | B:test_a.py |'];
   const root = repo({
     'docs/spec.md': SPEC,
-    'docs/plan.md': plan(rows),
+    'docs/changes/mvp/plan.md': plan(rows),
     'backend/tests/test_a.py': '# RULE-14\n',
   });
   assert.deepEqual(checkTrace({ root, throughPhase: 1 }), []);
@@ -125,7 +125,7 @@ test('a step not in Order of work, and empty cells, are reported', () => {
   const rows = ['| RULE-1 | one | P9.9 | B:test_a.py |', '| RULE-14 | fourteen |  |  |'];
   const root = repo({
     'docs/spec.md': SPEC,
-    'docs/plan.md': plan(rows),
+    'docs/changes/mvp/plan.md': plan(rows),
     'backend/tests/test_a.py': '# RULE-1 RULE-14\n',
   });
   const problems = checkTrace({ root, throughPhase: 9 });
@@ -136,7 +136,7 @@ test('a step not in Order of work, and empty cells, are reported', () => {
 
 test('W points at the walk-through, which is due in phase 5', () => {
   const rows = ['| RULE-1 | one | P1.1 | W |', '| RULE-14 | fourteen | P1.1 | B:test_a.py |'];
-  const base = { 'docs/spec.md': SPEC, 'docs/plan.md': plan(rows), 'backend/tests/test_a.py': '# RULE-14\n' };
+  const base = { 'docs/spec.md': SPEC, 'docs/changes/mvp/plan.md': plan(rows), 'backend/tests/test_a.py': '# RULE-14\n' };
   assert.deepEqual(checkTrace({ root: repo(base), throughPhase: 1 }), []);
   assert.deepEqual(checkTrace({ root: repo(base), throughPhase: 5 }), ['RULE-1: docs/walkthrough.md is missing']);
   const ok = repo({ ...base, 'docs/walkthrough.md': '- [ ] RULE-1 checked by hand\n' });
@@ -145,7 +145,7 @@ test('W points at the walk-through, which is due in phase 5', () => {
 
 test('end-to-end proofs are due in phase 5 and frontend proofs from phase 2', () => {
   const rows = ['| RULE-1 | one | P1.1 | E:a.spec.ts |', '| RULE-14 | fourteen | P1.1 | F:b.test.ts |'];
-  const root = repo({ 'docs/spec.md': SPEC, 'docs/plan.md': plan(rows) });
+  const root = repo({ 'docs/spec.md': SPEC, 'docs/changes/mvp/plan.md': plan(rows) });
   assert.deepEqual(checkTrace({ root, throughPhase: 1 }), []);
   assert.deepEqual(checkTrace({ root, throughPhase: 2 }), ['RULE-14: frontend/src/b.test.ts is missing']);
   assert.equal(checkTrace({ root, throughPhase: 5 }).length, 2);

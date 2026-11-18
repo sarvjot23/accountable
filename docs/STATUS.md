@@ -1,6 +1,6 @@
 # Status
 
-The Accountable MVP is built: all five phases of `docs/plan.md` are done and `npm test` passes. One walk-through item is still open: running the commands on a Mac and on Linux (APP-8, see `docs/walkthrough.md`).
+The Accountable MVP is built: all five phases of `docs/changes/mvp/plan.md` are done and `npm test` passes. One walk-through item is still open: running the commands on a Mac and on Linux (APP-8, see `docs/walkthrough.md`).
 
 ## Install
 
@@ -72,3 +72,4 @@ This writes `frontend/src/lib/api-types.ts` from the backend's OpenAPI schema. `
   - PIPE-9 (a card stays exactly where it's dropped) conflicted with PIPE-4 (Won and Lost most recent first). The spec now limits PIPE-9 to the open columns; Won and Lost keep their date order, as the board already did.
   Each fix has a test (pytest for the first two, Vitest for the third).
 - 2026-11-18: Screenshots of the dashboard, pipeline and a deal page are in `docs/screenshots/`, linked from the community contributions PR (ed-donner/accountable#10).
+- 2026-11-18: The docs were reorganized for future changes. `docs/spec.md` now describes the whole product as it stands and is the authority, with the problem statement brought in from the intent. Each change gets a folder, `docs/changes/<branch name>/`, with its `intent.md` and `plan.md`; the MVP's are in `docs/changes/mvp/`. `AGENTS.md` says to read the spec first and only the current change's folder, and `docs/REVIEW.md` flags code the spec doesn't describe. `scripts/check-trace.mjs` and its tests now read the plan from `docs/changes/mvp/plan.md`. History entries above keep the old paths. `npm test` passes.

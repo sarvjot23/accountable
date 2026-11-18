@@ -1,6 +1,6 @@
 # Plan: building the Accountable MVP
 
-This plan builds what `docs/intent.md` asks for and `docs/spec.md` describes, with the stack in `docs/TECH_STACK.md`. The dashboard and pipeline follow `docs/mockups/b-open-air.html`.
+This plan builds what `intent.md` (beside it) asks for and `docs/spec.md` describes, with the stack in `docs/TECH_STACK.md`. The dashboard and pipeline follow `docs/mockups/b-open-air.html`.
 
 Every requirement in the spec has an ID such as `RULE-3`. The **Traceability** section maps each one to the step that builds it and the tests that prove it, and `scripts/check-trace.mjs` checks the mapping, so coverage is checked by `npm test`, not taken on trust.
 
@@ -91,7 +91,7 @@ Both sides are organised by feature, so adding one later (quotes, invoices, prod
 | File | Change |
 | --- | --- |
 | `docs/spec.md` | carries the requirement IDs |
-| `docs/plan.md` | this file |
+| `docs/changes/mvp/plan.md` | this file |
 | `docs/walkthrough.md` | the by-hand checklist, one line per ID that can only be checked by eye or by hand, ticked during the walk-through (written in P5.4) |
 | `docs/STATUS.md` | how to install, run, seed, test and regenerate types; what's done after each phase |
 

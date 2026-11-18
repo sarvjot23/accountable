@@ -2,7 +2,7 @@
 
 The by-hand checklist (P5.4): one line per requirement that can only be checked by eye or by hand. Each line starts with its ID and is ticked with the date it was checked. Everything else is proved by the automated tests (`npm test`).
 
-How it was done: the app was run with `npm run dev` and used in Google Chrome at 1440px as a salesperson would: every section and action, each screen compared by eye with `docs/mockups/b-open-air.png` and the brand, with the browser console watched for errors. The code was then read against "How the code is organised" in `docs/plan.md`.
+How it was done: the app was run with `npm run dev` and used in Google Chrome at 1440px as a salesperson would: every section and action, each screen compared by eye with `docs/mockups/b-open-air.png` and the brand, with the browser console watched for errors. The code was then read against "How the code is organised" in `docs/changes/mvp/plan.md`.
 
 ## Checklist
 

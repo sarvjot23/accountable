@@ -106,7 +106,7 @@ const proofPhase = (entry) => PROOF_PHASE[entry === 'W' ? 'W' : entry[0]] ?? 1;
 export function checkTrace({ root, throughPhase }) {
   const read = (p) => readFileSync(join(root, p), 'utf8');
   const { defined, problems } = parseSpec(read('docs/spec.md'));
-  const { steps, rows } = parsePlan(read('docs/plan.md'));
+  const { steps, rows } = parsePlan(read('docs/changes/mvp/plan.md'));
 
   const live = [...defined].filter(([, v]) => !v.dropped).map(([id]) => id);
   const rowIds = new Set(rows.map((r) => r.id));

@@ -1,6 +1,18 @@
-# Spec: the Accountable MVP
+# Spec: Accountable
 
-This spec turns `docs/intent.md` into requirements and a design. The intent says what and why. This file says how it works and how it looks. The stack is in `docs/TECH_STACK.md` and the brand in `.claude/skills/brand/SKILL.md`.
+This spec describes Accountable as it stands today: what it does, how it works and how it looks. It is the authority on the product. When code and this file disagree, one of them is wrong. The stack is in `docs/TECH_STACK.md` and the brand in `.claude/skills/brand/SKILL.md`.
+
+Each change to Accountable has a folder, `docs/changes/<branch name>/`, with its `intent.md` (what and why) and `plan.md` (how it gets built and tested). A change updates this spec as part of its work, so that once it merges, this file describes the product with the change in it. The first change, the MVP, is in `docs/changes/mvp/`.
+
+## Problem
+
+A small business keeps track of its customers and sales in spreadsheets, inboxes and people's heads. Nobody can see at a glance which companies we deal with, who our contacts are, what's in the sales pipeline, what happened last with a customer or what needs doing next.
+
+## The product
+
+Accountable is a business management system: a sales CRM that will grow into a full Business OS, including ERP. Today it is a complete sales CRM for one salesperson at a company selling IT, software and AI solutions to other businesses, running on their own computer and used every day. It should feel sharp, modern and professional, and be a pleasure to use, good enough that the salesperson chooses it over spreadsheets for their real sales work.
+
+It has five sections: a **Dashboard** showing how sales are going at a glance, **Organizations** (the companies we do business with), **Contacts** (the people we deal with, including leads and customers), **Deals** (the potential sales) and the **Pipeline** board. Activities (notes, calls and emails, with follow-ups) are logged against contacts and deals. No other systems are involved yet.
 
 ## Requirement IDs
 
@@ -26,7 +38,7 @@ Rules for IDs:
 
 - An ID is defined once, here, with the brackets. Elsewhere (the plan, tests) it is written without brackets.
 - IDs are never reused or renumbered. A dropped requirement keeps its ID, struck through, with "Dropped" and the date. A new requirement takes the next free number in its area.
-- `docs/plan.md` maps every ID to the work that builds it and the tests that prove it, and `scripts/check-trace.mjs` checks that nothing is missing (see the plan).
+- The Traceability table in `docs/changes/mvp/plan.md` maps every ID to the work that builds it and the tests that prove it, and `scripts/check-trace.mjs` checks that nothing is missing. A change that adds or changes requirements maps them the same way in its own plan.
 
 ## 1. Shape of the app
 
@@ -313,8 +325,8 @@ A company selling IT, software and AI solutions:
 
 ## 8. Testing
 
-How each requirement is proved is in `docs/plan.md`, which maps every ID above to its tests. In short: pytest for the backend and the rules with a fixed "today", Vitest for the frontend, Playwright with the installed Chrome for the whole app, a written walk-through for what can only be checked by eye, and `scripts/check-trace.mjs` to make sure every ID is covered.
+How each requirement is proved is in the Traceability table of `docs/changes/mvp/plan.md`, which maps every ID above to its tests. In short: pytest for the backend and the rules with a fixed "today", Vitest for the frontend, Playwright with the installed Chrome for the whole app, a written walk-through for what can only be checked by eye, and `scripts/check-trace.mjs` to make sure every ID is covered.
 
-## 9. Not in the MVP
+## 9. Not built yet
 
-As in the intent: sign-in and several users, dark mode and phone layouts, AI features, integrations, other currencies, reports beyond the dashboard, tags and custom fields, changing the stages, importing and exporting.
+Accountable doesn't have these yet: sign-in, several users sharing the same data or a record of who did what; use from anywhere but the computer it runs on; dark mode and phone layouts; AI features, such as deal scoring or drafting emails; email, calendar or phone integrations; currencies other than US dollars; reports beyond the dashboard; tags and custom fields; changing the pipeline stages; importing and exporting records. Each would come as a change with its own folder in `docs/changes/`.
