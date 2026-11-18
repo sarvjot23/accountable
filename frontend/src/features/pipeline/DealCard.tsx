@@ -48,7 +48,7 @@ export function DealCard({ deal }: { deal: Deal }) {
   }
 
   return (
-    <article
+    <div
       ref={setNodeRef}
       style={{ transform: CSS.Translate.toString(transform), transition }}
       className={cx(styles.card, deal.is_late && styles.late, isDragging && styles.placeholder)}
@@ -56,11 +56,13 @@ export function DealCard({ deal }: { deal: Deal }) {
       data-deal-id={deal.id}
       {...attributes}
       {...listeners}
+      role="button"
+      tabIndex={0}
       aria-roledescription="Deal card. Press Space to pick it up and the arrow keys to move it, or Enter to open it."
       onKeyDown={onKeyDown}
       onClick={() => navigate(`/deals/${deal.id}`)}
     >
       <CardBody deal={deal} />
-    </article>
+    </div>
   );
 }

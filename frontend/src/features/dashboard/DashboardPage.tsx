@@ -54,7 +54,10 @@ export function DashboardPage() {
             </Panel>
           </div>
           <div className={styles.rowThree}>
-            <Panel title="Deals won" sub={`Count each month · ${plural(data.deals_won_12_months, 'deal')} in 12 months`}>
+            <Panel
+              title="Deals won"
+              sub={`Count each month · ${plural(data.deals_won_12_months, 'deal')} in 12 months`}
+            >
               <DealsWonChart months={data.monthly} />
             </Panel>
             <Panel

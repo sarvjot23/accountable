@@ -73,7 +73,12 @@ export function ContactPage() {
                   sub={plural(contact.deals.length, 'deal') + ' as main contact'}
                   actions={
                     contact.organization_id ? (
-                      <Button size="small" variant="light" className={recordStyles.soft} onClick={() => setAddingDeal(true)}>
+                      <Button
+                        size="small"
+                        variant="light"
+                        className={recordStyles.soft}
+                        onClick={() => setAddingDeal(true)}
+                      >
                         <Plus aria-hidden /> Add deal
                       </Button>
                     ) : undefined

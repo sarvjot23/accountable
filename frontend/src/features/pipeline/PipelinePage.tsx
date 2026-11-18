@@ -130,8 +130,16 @@ export function PipelinePage() {
     if (typeof id === 'string' && id in columns) return id as StageKey;
     return (Object.keys(columns) as StageKey[]).find((key) => columns[key].some((d) => d.id === id));
   };
-  const activeDeal = activeId === null ? null : Object.values(columns).flat().find((d) => d.id === activeId);
-  const dealName = (id: UniqueIdentifier) => Object.values(columns).flat().find((d) => d.id === id)?.name ?? 'The card';
+  const activeDeal =
+    activeId === null
+      ? null
+      : Object.values(columns)
+          .flat()
+          .find((d) => d.id === activeId);
+  const dealName = (id: UniqueIdentifier) =>
+    Object.values(columns)
+      .flat()
+      .find((d) => d.id === id)?.name ?? 'The card';
   const placeName = (id: UniqueIdentifier) => {
     const key = containerOf(id);
     return key ? stageOf(key).label : 'the board';
@@ -155,7 +163,9 @@ export function PipelinePage() {
       const target = prev[to];
       const overIndex = target.findIndex((d) => d.id === over.id);
       const below =
-        over.rect && active.rect.current.translated && active.rect.current.translated.top > over.rect.top + over.rect.height / 2;
+        over.rect &&
+        active.rect.current.translated &&
+        active.rect.current.translated.top > over.rect.top + over.rect.height / 2;
       const index = overIndex >= 0 ? overIndex + (below ? 1 : 0) : target.length;
       const moved = applyMove(moving, to, today);
       return {
@@ -183,8 +193,7 @@ export function PipelinePage() {
     const next = { ...columns, [to]: items };
     const id = Number(active.id);
     const fromStage = (Object.keys(before) as StageKey[]).find((key) => before[key].some((d) => d.id === id));
-    const unchanged =
-      fromStage === to && before[to].map((d) => d.id).join() === next[to].map((d) => d.id).join();
+    const unchanged = fromStage === to && before[to].map((d) => d.id).join() === next[to].map((d) => d.id).join();
     if (unchanged) {
       release(before);
       return;
@@ -198,7 +207,8 @@ export function PipelinePage() {
         title="Pipeline"
         summary={
           <span data-testid="pipeline-summary">
-            <b>{money(totals.value)}</b> open across {plural(totals.count, 'deal')} · <b>{money(totals.expected)}</b> expected
+            <b>{money(totals.value)}</b> open across {plural(totals.count, 'deal')} · <b>{money(totals.expected)}</b>{' '}
+            expected
           </span>
         }
         actions={
@@ -233,12 +243,17 @@ export function PipelinePage() {
           accessibility={{
             announcements: {
               onDragStart: ({ active }) => `Picked up ${dealName(active.id)}.`,
-              onDragOver: ({ active, over }) => (over ? `${dealName(active.id)} is over ${placeName(over.id)}.` : `${dealName(active.id)} is not over a column.`),
-              onDragEnd: ({ active, over }) => (over ? `${dealName(active.id)} dropped in ${placeName(over.id)}.` : `${dealName(active.id)} put back.`),
+              onDragOver: ({ active, over }) =>
+                over
+                  ? `${dealName(active.id)} is over ${placeName(over.id)}.`
+                  : `${dealName(active.id)} is not over a column.`,
+              onDragEnd: ({ active, over }) =>
+                over ? `${dealName(active.id)} dropped in ${placeName(over.id)}.` : `${dealName(active.id)} put back.`,
               onDragCancel: ({ active }) => `Move cancelled. ${dealName(active.id)} put back.`,
             },
             screenReaderInstructions: {
-              draggable: 'Press Space to pick up a card, the arrow keys to move it, Space again to drop it, or Escape to cancel.',
+              draggable:
+                'Press Space to pick up a card, the arrow keys to move it, Space again to drop it, or Escape to cancel.',
             },
           }}
         >

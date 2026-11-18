@@ -3,7 +3,7 @@
 from collections.abc import Iterator
 from datetime import UTC, datetime
 
-from sqlalchemy import DateTime, Engine, MetaData, create_engine, event, inspect
+from sqlalchemy import DateTime, Engine, Executable, MetaData, create_engine, event, inspect
 from sqlalchemy.engine import Connection
 from sqlalchemy.types import TypeDecorator
 
@@ -85,6 +85,19 @@ def migrate() -> None:
     with get_engine().begin() as conn:
         cfg.attributes["connection"] = conn
         command.upgrade(cfg, "head")
+
+
+def insert_id(conn: Connection, statement: Executable) -> int:
+    """Run an insert and return the new row's id."""
+    key = conn.execute(statement).inserted_primary_key
+    if key is None:
+        raise RuntimeError("The insert didn't return an id")
+    return key[0]
+
+
+def count(conn: Connection, statement: Executable) -> int:
+    """Run a `select count(...)` and return the number."""
+    return conn.scalar(statement) or 0
 
 
 def get_conn() -> Iterator[Connection]:

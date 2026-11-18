@@ -36,7 +36,11 @@ const columns = [
   }),
   column.accessor('contacts_count', { header: 'Contacts', meta: { numeric: true } }),
   column.accessor('open_deals_count', { header: 'Open deals', meta: { numeric: true } }),
-  column.accessor('open_value', { header: 'Open value', meta: { numeric: true }, cell: (info) => money(info.getValue()) }),
+  column.accessor('open_value', {
+    header: 'Open value',
+    meta: { numeric: true },
+    cell: (info) => money(info.getValue()),
+  }),
 ];
 
 export function OrganizationsPage() {

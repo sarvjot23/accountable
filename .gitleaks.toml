@@ -1,0 +1,12 @@
+# gitleaks: the default rules over the whole repo, its history and the working tree.
+# Skipped: the git-ignored .env (where local secrets belong) and installed or generated folders.
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Local secrets and installed or generated files"
+paths = [
+  '''(^|/)\.env$''',
+  '''(^|/)(node_modules|\.venv|dist|coverage|test-results|playwright-report|\.pytest_cache|\.ruff_cache)/''',
+  '''^backend/data/''',
+]

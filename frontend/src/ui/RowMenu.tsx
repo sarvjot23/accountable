@@ -18,12 +18,7 @@ export function RowMenu({ label, onEdit, onDelete }: { label: string; onEdit: ()
         </button>
       </Menu.Trigger>
       <Menu.Portal>
-        <Menu.Content
-          className={styles.menu}
-          align="end"
-          sideOffset={4}
-          onClick={(e) => e.stopPropagation()}
-        >
+        <Menu.Content className={styles.menu} align="end" sideOffset={4} onClick={(e) => e.stopPropagation()}>
           <Menu.Item className={styles.item} onSelect={onEdit}>
             <Pencil aria-hidden /> Edit
           </Menu.Item>

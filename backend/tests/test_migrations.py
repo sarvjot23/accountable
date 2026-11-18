@@ -1,15 +1,15 @@
 """Migrations match the code's tables and keep existing data (APP-14)."""
 
 from alembic.autogenerate import compare_metadata
+from alembic.config import Config
 from alembic.migration import MigrationContext
 from alembic.script import ScriptDirectory
-from alembic.config import Config
 from sqlalchemy import func, insert, select, text
 
 from accountable import clock, config, db
 
 
-def head_revision() -> str:
+def head_revision() -> str | None:
     cfg = Config()
     cfg.set_main_option("script_location", str(config.MIGRATIONS_DIR))
     return ScriptDirectory.from_config(cfg).get_current_head()

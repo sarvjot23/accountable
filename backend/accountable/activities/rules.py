@@ -28,9 +28,9 @@ def group_follow_ups(items: Iterable[Mapping], today: date, upcoming_days: int |
         status = follow_up_status(item["follow_up_date"], item["follow_up_done"], today)
         if status is None:
             continue
-        if status == "upcoming" and upcoming_days is not None:
-            if (item["follow_up_date"] - today).days > upcoming_days:
-                continue
+        too_far = upcoming_days is not None and (item["follow_up_date"] - today).days > upcoming_days
+        if status == "upcoming" and too_far:
+            continue
         groups[status].append(item)
     for group in groups.values():
         group.sort(key=lambda i: (i["follow_up_date"], i.get("id", 0)))

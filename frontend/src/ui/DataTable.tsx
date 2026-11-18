@@ -80,12 +80,7 @@ export function DataTable<T>({
         <label className={styles.search}>
           <Search aria-hidden />
           <span className="visually-hidden">{searchLabel}</span>
-          <input
-            type="search"
-            placeholder={searchLabel}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+          <input type="search" placeholder={searchLabel} value={search} onChange={(e) => setSearch(e.target.value)} />
         </label>
         {toolbar}
       </div>
@@ -107,7 +102,11 @@ export function DataTable<T>({
                         aria-sort={sorted === 'asc' ? 'ascending' : sorted === 'desc' ? 'descending' : undefined}
                       >
                         {header.column.getCanSort() ? (
-                          <button type="button" className={styles.sort} onClick={header.column.getToggleSortingHandler()}>
+                          <button
+                            type="button"
+                            className={styles.sort}
+                            onClick={header.column.getToggleSortingHandler()}
+                          >
                             {flexRender(header.column.columnDef.header, header.getContext())}
                             {sorted === 'asc' && <ArrowUp aria-hidden />}
                             {sorted === 'desc' && <ArrowDown aria-hidden />}

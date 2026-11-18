@@ -2,6 +2,7 @@
 
 import random
 from datetime import UTC, date, datetime
+from itertools import pairwise
 
 import pytest
 
@@ -255,7 +256,7 @@ def test_200_random_moves_keep_a_strict_order():  # PIPE-15
         actual = sorted(cards, key=lambda c: cards[c])
         assert actual == expected
         positions = [cards[c] for c in actual]
-        assert all(a < b for a, b in zip(positions, positions[1:], strict=False))
+        assert all(a < b for a, b in pairwise(positions))
 
 
 # RULE-14 funnel

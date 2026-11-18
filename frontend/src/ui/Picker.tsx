@@ -1,7 +1,7 @@
 import * as Popover from '@radix-ui/react-popover';
 import { Command } from 'cmdk';
 import { Check, ChevronDown } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { cx } from '../lib/cx';
 import styles from './Picker.module.css';
 
@@ -35,6 +35,7 @@ export function Picker({
   describedBy?: string;
 }) {
   const [open, setOpen] = useState(false);
+  const listId = useId();
   const selected = options.find((o) => o.value === value);
   const groups = useMemo(() => {
     const map = new Map<string, PickerOption[]>();
@@ -58,6 +59,7 @@ export function Picker({
           type="button"
           role="combobox"
           aria-expanded={open}
+          aria-controls={listId}
           aria-invalid={invalid || undefined}
           aria-describedby={describedBy}
           className={cx(styles.trigger, !selected && styles.placeholder)}
@@ -67,9 +69,9 @@ export function Picker({
         </button>
       </Popover.Trigger>
       <Popover.Portal>
-        <Popover.Content className={styles.content} align="start" sideOffset={6}>
+        <Popover.Content id={listId} className={styles.content} align="start" sideOffset={6}>
           <Command label={placeholder} className={styles.command}>
-            <Command.Input className={styles.search} placeholder="Type to search" autoFocus />
+            <Command.Input className={styles.search} placeholder="Type to search" />
             <Command.List className={styles.list}>
               <Command.Empty className={styles.empty}>Nothing matches</Command.Empty>
               {noneLabel && (

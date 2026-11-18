@@ -13,7 +13,7 @@ export function RecentActivity({ activities }: { activities: Dashboard['recent_a
     return <EmptyState message="Nothing yet. Activities you log, and stage changes, show up here." />;
   }
   return (
-    <ul className={`${styles.rows} ${styles.scrolling}`} aria-label="Recent activity" tabIndex={0}>
+    <ul className={styles.rows} aria-label="Recent activity">
       {activities.map((a) => (
         <li key={a.id} className={styles.row} data-testid="recent-activity">
           <span className={styles.avatar} style={{ background: tint(a.contact_id ?? a.deal_id ?? a.id) }} aria-hidden>

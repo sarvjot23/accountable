@@ -30,7 +30,12 @@ def test_an_activity_needs_a_contact_or_a_deal(client):  # DATA-6
 
 def test_type_and_description_rules(client, linked):  # DATA-5
     c, _ = linked
-    assert client.post("/api/activities", json={"type": "stage_change", "description": "x", "contact_id": c["id"]}).status_code == 422
+    assert (
+        client.post(
+            "/api/activities", json={"type": "stage_change", "description": "x", "contact_id": c["id"]}
+        ).status_code
+        == 422
+    )
     response = client.post("/api/activities", json={"type": "call", "description": " ", "contact_id": c["id"]})
     assert response.json()["detail"] == "Enter a description"
     response = client.post("/api/activities", json={"type": "call", "description": "x" * 5001, "contact_id": c["id"]})

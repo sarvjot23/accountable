@@ -43,8 +43,8 @@ export function FiguresStrip({ data }: { data: Dashboard }) {
         <p className={styles.label}>Late deals</p>
         <p className={`${styles.number} ${styles.lateNumber}`}>{data.late_deals.count}</p>
         <p className={styles.small}>
-          <Pill tone="red">{money(data.late_deals.value)}</Pill> past {data.late_deals.count === 1 ? 'its' : 'their'} close
-          date
+          <Pill tone="red">{money(data.late_deals.value)}</Pill> past {data.late_deals.count === 1 ? 'its' : 'their'}{' '}
+          close date
         </p>
         <Meter share={data.late_deals.share_of_open} color="var(--raspberry)" />
       </Link>

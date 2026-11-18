@@ -32,7 +32,15 @@ export function Chips<V extends string>({
 }
 
 /** A single on/off chip, such as "Late only". */
-export function ToggleChip({ pressed, onChange, children }: { pressed: boolean; onChange: (v: boolean) => void; children: string }) {
+export function ToggleChip({
+  pressed,
+  onChange,
+  children,
+}: {
+  pressed: boolean;
+  onChange: (v: boolean) => void;
+  children: string;
+}) {
   return (
     <button
       type="button"

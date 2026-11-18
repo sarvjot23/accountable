@@ -1,6 +1,6 @@
 """Organization routes and field rules (DATA-1, DATA-2, API-1, API-2)."""
 
-from datetime import UTC, date, datetime
+from datetime import UTC, date, datetime, timedelta
 
 
 def test_create_and_get(client):  # API-2 DATA-2
@@ -24,7 +24,7 @@ def test_ids_and_utc_timestamps(client, org):  # DATA-1
     body = org()
     assert isinstance(body["id"], int)
     created = datetime.fromisoformat(body["created_at"])
-    assert created.utcoffset().total_seconds() == 0
+    assert created.utcoffset() == timedelta(0)
     assert body["created_at"] == body["updated_at"]
 
 

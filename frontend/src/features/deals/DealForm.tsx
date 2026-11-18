@@ -42,7 +42,11 @@ export interface DealPreset {
 }
 
 /** FORM-3: the chosen organization's contacts first, then everyone else. */
-export function contactOptions(contacts: Contact[], organizationId: number | null, organizationName?: string): PickerOption[] {
+export function contactOptions(
+  contacts: Contact[],
+  organizationId: number | null,
+  organizationName?: string,
+): PickerOption[] {
   const theirs = contacts.filter((c) => organizationId !== null && c.organization_id === organizationId);
   const others = contacts.filter((c) => !theirs.includes(c));
   const option = (c: Contact, group: string): PickerOption => ({
@@ -76,13 +80,51 @@ export function DealSheet({
   );
 }
 
+/** The form's starting values: the deal's, or blanks with any preset organization, contact and stage. */
+function startingValues(deal?: Deal, preset?: DealPreset): Values {
+  if (!deal) {
+    const stage = preset?.stage ?? 'new';
+    return {
+      name: '',
+      organization_id: preset?.organization_id ?? null,
+      contact_id: preset?.contact_id ?? null,
+      stage,
+      value: '',
+      probability: String(stageOf(stage).probability),
+      close_date: '',
+    };
+  }
+  return {
+    name: deal.name,
+    organization_id: deal.organization_id,
+    contact_id: deal.contact_id,
+    stage: deal.stage as StageKey,
+    value: String(deal.value),
+    probability: String(deal.probability),
+    close_date: deal.close_date ?? '',
+  };
+}
+
+/** What's sent to the API. RULE-5: only a probability typed in by hand is sent, and then it's kept as manual. */
+function toPayload(values: Values, probabilityTyped: boolean): DealInput {
+  const payload: DealInput = {
+    name: values.name,
+    organization_id: values.organization_id,
+    contact_id: values.contact_id,
+    stage: values.stage,
+    value: Number(values.value.replace(/,/g, '')),
+    close_date: values.close_date || null,
+  };
+  if (probabilityTyped) payload.probability = Number(values.probability);
+  return payload;
+}
+
 export function DealForm({ deal, preset, onDone }: { deal?: Deal; preset?: DealPreset; onDone: () => void }) {
   const save = useSaveDeal();
   const toast = useToast();
   const organizations = useOrganizations().data ?? [];
   const contacts = useContacts().data ?? [];
   const [formError, setFormError] = useState<string | null>(null);
-  const initialStage: StageKey = (deal?.stage as StageKey | undefined) ?? preset?.stage ?? 'new';
   const {
     register,
     control,
@@ -92,33 +134,17 @@ export function DealForm({ deal, preset, onDone }: { deal?: Deal; preset?: DealP
     formState: { errors, dirtyFields },
   } = useForm<Values>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      name: deal?.name ?? '',
-      organization_id: deal?.organization_id ?? preset?.organization_id ?? null,
-      contact_id: deal ? deal.contact_id : (preset?.contact_id ?? null),
-      stage: initialStage,
-      value: deal ? String(deal.value) : '',
-      probability: String(deal?.probability ?? stageOf(initialStage).probability),
-      close_date: deal?.close_date ?? '',
-    },
+    defaultValues: startingValues(deal, preset),
   });
   const organizationId = watch('organization_id');
   // RULE-5: typed in now, or saved by hand before and kept while the stage stays the same.
-  const probabilityByHand = Boolean(dirtyFields.probability) || (deal?.probability_manual === true && watch('stage') === deal.stage);
+  const probabilityByHand =
+    Boolean(dirtyFields.probability) || (deal?.probability_manual === true && watch('stage') === deal.stage);
   const organizationName = organizations.find((o) => o.id === organizationId)?.name;
 
   async function submit(values: Values) {
     setFormError(null);
-    const payload: DealInput = {
-      name: values.name,
-      organization_id: values.organization_id,
-      contact_id: values.contact_id,
-      stage: values.stage,
-      value: Number(values.value.replace(/,/g, '')),
-      close_date: values.close_date || null,
-    };
-    // RULE-5: only a probability typed in by hand is sent, and then it's kept as manual.
-    if (dirtyFields.probability) payload.probability = Number(values.probability);
+    const payload = toPayload(values, Boolean(dirtyFields.probability));
     try {
       await save.mutateAsync({ id: deal?.id, values: payload });
       toast('Deal saved');
@@ -129,7 +155,12 @@ export function DealForm({ deal, preset, onDone }: { deal?: Deal; preset?: DealP
   }
 
   return (
-    <form className={formStyles.form} onSubmit={handleSubmit(submit)} noValidate aria-label={deal ? 'Edit deal' : 'Add deal'}>
+    <form
+      className={formStyles.form}
+      onSubmit={handleSubmit(submit)}
+      noValidate
+      aria-label={deal ? 'Edit deal' : 'Add deal'}
+    >
       <div className={formStyles.fields}>
         {formError && (
           <p className={formStyles.formError} role="alert">
@@ -137,7 +168,7 @@ export function DealForm({ deal, preset, onDone }: { deal?: Deal; preset?: DealP
           </p>
         )}
         <Field label="Name" htmlFor="deal-name" error={errors.name?.message}>
-          <TextInput id="deal-name" autoFocus aria-invalid={!!errors.name} {...register('name')} />
+          <TextInput id="deal-name" data-autofocus aria-invalid={!!errors.name} {...register('name')} />
         </Field>
         <Field label="Organization" htmlFor="deal-org" error={errors.organization_id?.message}>
           <Controller

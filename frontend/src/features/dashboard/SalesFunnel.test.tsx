@@ -1,5 +1,7 @@
-// The sales funnel's shape and labels (DASH-8).
+// The sales funnel's shape and labels (DASH-8), and its links to the board (DASH-9).
 import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { useLocation } from 'react-router';
 import { renderWithApp } from '../../test/render';
 import type { Dashboard } from './api';
 import { MIN_SHARE, SalesFunnel, segmentWidths } from './SalesFunnel';
@@ -17,6 +19,10 @@ const funnel: Dashboard['funnel'] = {
   won_count: 2,
 };
 
+function CurrentPath() {
+  return <output aria-label="Current page">{useLocation().pathname}</output>;
+}
+
 describe('SalesFunnel (DASH-8)', () => {
   it('makes each segment as wide as its value, with a minimum', () => {
     const widths = segmentWidths([1000, 500, 100, 0], 400);
@@ -27,7 +33,13 @@ describe('SalesFunnel (DASH-8)', () => {
   it('narrows from top to bottom in stage order and colors', () => {
     renderWithApp(<SalesFunnel funnel={funnel} width={520} />);
     const segments = screen.getAllByRole('link');
-    expect(segments.map((s) => s.getAttribute('data-stage'))).toEqual(['new', 'qualified', 'proposal', 'negotiation', 'won']);
+    expect(segments.map((s) => s.getAttribute('data-stage'))).toEqual([
+      'new',
+      'qualified',
+      'proposal',
+      'negotiation',
+      'won',
+    ]);
     const widths = segments.map((s) => Number(s.getAttribute('data-width')));
     for (let i = 1; i < widths.length; i++) expect(widths[i]).toBeLessThanOrEqual(widths[i - 1]!);
     expect(widths[4]).toBeCloseTo(370 * MIN_SHARE, 0); // Won is small, so it gets the minimum
@@ -42,5 +54,29 @@ describe('SalesFunnel (DASH-8)', () => {
     expect(screen.getByText('18 deals · 97%')).toBeInTheDocument();
     expect(screen.getByText('New to Won, by value')).toBeInTheDocument();
     expect(screen.getByTestId('new-to-won')).toHaveTextContent('7% · 2 of 20 deals');
+  });
+
+  it('[DASH-9] opens the Pipeline board when a segment is clicked', async () => {
+    renderWithApp(
+      <>
+        <SalesFunnel funnel={funnel} />
+        <CurrentPath />
+      </>,
+    );
+    await userEvent.click(screen.getAllByRole('link')[1]!);
+    expect(screen.getByRole('status', { name: 'Current page' })).toHaveTextContent('/pipeline');
+  });
+
+  it('[DASH-9] opens the Pipeline board from the keyboard', async () => {
+    renderWithApp(
+      <>
+        <SalesFunnel funnel={funnel} />
+        <CurrentPath />
+      </>,
+    );
+    await userEvent.tab();
+    expect(screen.getAllByRole('link')[0]).toHaveFocus();
+    await userEvent.keyboard(' ');
+    expect(screen.getByRole('status', { name: 'Current page' })).toHaveTextContent('/pipeline');
   });
 });

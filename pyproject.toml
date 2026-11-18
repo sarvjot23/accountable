@@ -16,6 +16,9 @@ dependencies = [
 dev = [
     "pytest>=8.3",
     "httpx>=0.28",
+    "ruff>=0.17.5",
+    "ty>=0.0.105",
+    "pytest-cov>=7.1.0",
 ]
 
 [tool.uv]
@@ -26,3 +29,25 @@ testpaths = ["backend/tests"]
 pythonpath = ["backend"]
 addopts = "-q --import-mode=importlib"
 filterwarnings = ["ignore:Using `httpx` with `starlette.testclient` is deprecated"]
+
+[tool.ruff]
+line-length = 120
+src = ["backend"]
+
+[tool.ruff.lint]
+# The defaults, plus import order and a limit on how complex any one function may get.
+extend-select = ["I", "C901"]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 15
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.ty.environment]
+python-version = "3.12"
+extra-paths = ["backend"]
+
+[tool.coverage.run]
+source = ["backend/accountable"]
+omit = ["backend/migrations/*"]

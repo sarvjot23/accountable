@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import { contact, deal, organization } from '../../test/fixtures';
 import { mockApi, renderWithApp } from '../../test/render';
+import type { Deal } from './api';
 import { contactOptions, DealForm } from './DealForm';
 
 const orgs = [organization({ id: 1, name: 'Northwind Labs' }), organization({ id: 2, name: 'Harbor Finance' })];
@@ -13,9 +14,9 @@ const people = [
   contact({ id: 12, name: 'Zoe Hart', organization_id: 1, organization_name: 'Northwind Labs' }),
 ];
 
-function setup(props: Parameters<typeof DealForm>[0] = { onDone: vi.fn() }, save?: (body: any) => unknown) {
-  const saved: any[] = [];
-  const handler = (body: any) => {
+function setup(props: Parameters<typeof DealForm>[0] = { onDone: vi.fn() }, save?: (body: Partial<Deal>) => unknown) {
+  const saved: Partial<Deal>[] = [];
+  const handler = (body: Partial<Deal>) => {
     saved.push(body);
     return save ? save(body) : deal({ ...body, id: 1 });
   };
@@ -100,7 +101,9 @@ describe('DealForm', () => {
       ['Ava Grant', 'Other contacts'],
     ]);
     setup({ onDone: vi.fn(), preset: { organization_id: 1 } });
-    await waitFor(() => expect(screen.getByRole('combobox', { name: 'Organization' })).toHaveTextContent('Northwind Labs'));
+    await waitFor(() =>
+      expect(screen.getByRole('combobox', { name: 'Organization' })).toHaveTextContent('Northwind Labs'),
+    );
     await userEvent.click(screen.getByRole('combobox', { name: 'Main contact' }));
     const list = await screen.findByRole('listbox');
     const labels = within(list)

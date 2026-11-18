@@ -1,8 +1,11 @@
 import '@testing-library/jest-dom/vitest';
-import { cleanup } from '@testing-library/react';
+import { cleanup, configure } from '@testing-library/react';
 import { afterEach } from 'vitest';
 
 afterEach(() => cleanup());
+
+// The whole suite runs at once with coverage on, so a page can take a few seconds to settle.
+configure({ asyncUtilTimeout: 5000 });
 
 // jsdom lacks these, and Radix, cmdk and Recharts use them.
 class ResizeObserverStub {

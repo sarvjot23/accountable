@@ -9,6 +9,7 @@ You need, once:
 - [Node.js](https://nodejs.org) 22 or later (24 or 26 recommended), which includes npm
 - [uv](https://docs.astral.sh/uv/) for Python; it fetches Python 3.12 by itself
 - Google Chrome, for the end-to-end tests
+- [gitleaks](https://github.com/gitleaks/gitleaks), for the secrets check (for example `winget install gitleaks`, `brew install gitleaks`)
 
 Then, from the repo root:
 
@@ -40,6 +41,14 @@ npm test
 ```
 
 This runs, in order: the traceability check (`test:trace`), the API types check (`test:types`), the backend tests (`test:backend`, pytest), the frontend unit tests (`test:frontend`, Vitest) and the end-to-end tests (`test:e2e`, Playwright in Chrome). It fails if any of them fails. Each can be run on its own, for example `npm run test:backend`. The tests use their own databases (a temporary file for pytest, and one in your system's temp folder for Playwright, on ports 8100 and 5180), so they never touch your data and need nothing else running.
+
+## Check
+
+```
+npm run check
+```
+
+Run this before calling any work done. It runs, in order, and fails if any of them fails: Prettier and ESLint for the frontend and ruff for the backend, including a cyclomatic complexity limit of 15 per function (`lint`); `tsc` and `ty` (`typecheck`); gitleaks across the repo, its history and the working tree, allowing the git-ignored `.env` (`secrets`); then `npm test`, which fails if unit test coverage drops below 80% on either side. `npm run check:quick` is the same without the end-to-end tests. `npm run format` fixes the formatting with Prettier and ruff.
 
 ## Regenerate the API types
 
@@ -74,3 +83,4 @@ This writes `frontend/src/lib/api-types.ts` from the backend's OpenAPI schema. `
 - 2026-11-18: Screenshots of the dashboard, pipeline and a deal page are in `docs/screenshots/`, linked from the community contributions PR (ed-donner/accountable#10).
 - 2026-11-18: The docs were reorganized for future changes. `docs/spec.md` now describes the whole product as it stands and is the authority, with the problem statement brought in from the intent. Each change gets a folder, `docs/changes/<branch name>/`, with its `intent.md` and `plan.md`; the MVP's are in `docs/changes/mvp/`. `AGENTS.md` says to read the spec first and only the current change's folder, and `docs/REVIEW.md` flags code the spec doesn't describe. `scripts/check-trace.mjs` and its tests now read the plan from `docs/changes/mvp/plan.md`. History entries above keep the old paths. `npm test` passes.
 - 2026-11-18: `docs/STANDARDS.md` holds the coding standards. `AGENTS.md` points to it, and `docs/REVIEW.md` checks every change against it.
+- 2026-11-18: `npm run check` (and `check:quick`, without the end-to-end tests) runs Prettier, ESLint (recommended TypeScript, React Hooks and accessibility rules), ruff, a complexity limit of 15, `tsc`, `ty`, gitleaks and `npm test` with at least 80% unit test coverage; `npm run format` fixes the formatting. What the checks found was fixed: three forms split to lower their complexity, `autoFocus` replaced by the sheet focusing the field marked `data-autofocus`, the pipeline card made a real `role="button"`, the Picker given `aria-controls`, typed test helpers, the backend's nullable results checked (`db.insert_id`, `db.count`), and ruff's findings. Recent activity on the dashboard no longer scrolls inside its panel (the list shows all 15), and the contacts summary now says "1 lead". The React Compiler-only `incompatible-library` rule is off. Vitest allows 20 seconds a test, as the whole suite runs with coverage, and the axe check on forms and dialogs now waits for their fade-in to end. About 170 new unit tests took frontend coverage from 64% to over 99%; the backend is at 98%.

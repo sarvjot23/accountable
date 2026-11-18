@@ -23,9 +23,7 @@ def test_a_broken_link_is_refused_by_the_database(db_path):  # DATA-8
     now = clock.now()
     with pytest.raises(IntegrityError), db.get_engine().begin() as conn:
         conn.execute(
-            insert(contacts).values(
-                first_name="A", status="lead", organization_id=999, created_at=now, updated_at=now
-            )
+            insert(contacts).values(first_name="A", status="lead", organization_id=999, created_at=now, updated_at=now)
         )
 
 

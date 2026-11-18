@@ -49,42 +49,48 @@ export function SalesFunnel({ funnel, width = 520 }: { funnel: Dashboard['funnel
           const label = `${s.label}: ${money(s.value)}, ${plural(s.count, 'deal')}${i ? `, ${percent(s.share)} of New` : ''}. Open the pipeline.`;
           return (
             <g key={s.stage}>
-            <g
-              className={styles.segment}
-              role="link"
-              tabIndex={0}
-              aria-label={label}
-              data-stage={s.stage}
-              data-width={top.toFixed(1)}
-              onClick={() => navigate('/pipeline')}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  navigate('/pipeline');
-                }
-              }}
-            >
-              <path
-                d={`M${cx - top / 2},${y0} L${cx + top / 2},${y0} L${cx + bottom / 2},${y1} L${cx - bottom / 2},${y1} Z`}
-                fill={st.color}
-                stroke={st.color}
-                strokeWidth={6}
-                strokeLinejoin="round"
-              />
-              <text x={cx} y={y0 + SEGMENT / 2 + 5} textAnchor="middle" className={styles.segmentName} fill={st.textColor}>
-                {s.label}
-              </text>
-            </g>
-            {/* The figures beside the segment; the segment's link already says them. */}
-            <g aria-hidden>
-              <text x={width} y={y0 + SEGMENT / 2 - 1} textAnchor="end" className={styles.segmentValue}>
-                {money(s.value)}
-              </text>
-              <text x={width} y={y0 + SEGMENT / 2 + 16} textAnchor="end" className={styles.segmentMeta}>
-                {plural(s.count, 'deal')}
-                {i ? ` · ${percent(s.share)}` : ''}
-              </text>
-            </g>
+              <g
+                className={styles.segment}
+                role="link"
+                tabIndex={0}
+                aria-label={label}
+                data-stage={s.stage}
+                data-width={top.toFixed(1)}
+                onClick={() => navigate('/pipeline')}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    navigate('/pipeline');
+                  }
+                }}
+              >
+                <path
+                  d={`M${cx - top / 2},${y0} L${cx + top / 2},${y0} L${cx + bottom / 2},${y1} L${cx - bottom / 2},${y1} Z`}
+                  fill={st.color}
+                  stroke={st.color}
+                  strokeWidth={6}
+                  strokeLinejoin="round"
+                />
+                <text
+                  x={cx}
+                  y={y0 + SEGMENT / 2 + 5}
+                  textAnchor="middle"
+                  className={styles.segmentName}
+                  fill={st.textColor}
+                >
+                  {s.label}
+                </text>
+              </g>
+              {/* The figures beside the segment; the segment's link already says them. */}
+              <g aria-hidden>
+                <text x={width} y={y0 + SEGMENT / 2 - 1} textAnchor="end" className={styles.segmentValue}>
+                  {money(s.value)}
+                </text>
+                <text x={width} y={y0 + SEGMENT / 2 + 16} textAnchor="end" className={styles.segmentMeta}>
+                  {plural(s.count, 'deal')}
+                  {i ? ` · ${percent(s.share)}` : ''}
+                </text>
+              </g>
             </g>
           );
         })}

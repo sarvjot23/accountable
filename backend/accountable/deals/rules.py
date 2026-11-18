@@ -5,6 +5,7 @@ Deals are passed in as mappings with the table's field names.
 
 from collections.abc import Iterable, Mapping, Sequence
 from datetime import date, datetime
+from typing import Any
 
 from accountable.deals.stages import OPEN_STAGES, stage
 
@@ -119,10 +120,8 @@ def drop_position(
 
     above = column[index - 1][1] if index > 0 else None
     below = column[index][1] if index < len(column) else None
-    if above is None and below is None:
-        return 1.0, {}
     if above is None:
-        return below - 1.0, {}
+        return (1.0 if below is None else below - 1.0), {}
     if below is None:
         return above + 1.0, {}
     if below - above > MIN_GAP:
@@ -187,7 +186,9 @@ def funnel(deals: Iterable[Mapping], history: Mapping[int, Iterable[str]], today
 def won_by_month(deals: Iterable[Mapping], today: date, months: int = 12) -> list[dict]:
     """RULE-13: deals and revenue won in each of the last `months` months, oldest first."""
     starts = [add_months(month_start(today), -i) for i in range(months - 1, -1, -1)]
-    rows = {s: {"month": s.isoformat()[:7], "deals_won": 0, "revenue_won": 0} for s in starts}
+    rows: dict[date, dict[str, Any]] = {
+        s: {"month": s.isoformat()[:7], "deals_won": 0, "revenue_won": 0} for s in starts
+    }
     for d in deals:
         if d["stage"] != "won" or d["close_date"] is None:
             continue

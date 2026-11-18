@@ -25,7 +25,7 @@ from sqlalchemy.engine import Connection
 from accountable import clock
 from accountable.activities import rules
 from accountable.contacts import data as contacts_data
-from accountable.db import UtcDateTime, metadata
+from accountable.db import UtcDateTime, count, insert_id, metadata
 from accountable.deals import data as deals_data
 from accountable.organizations import data as organizations_data
 
@@ -111,7 +111,7 @@ def open_follow_ups(conn: Connection) -> list[dict]:
 def create(conn: Connection, fields: Mapping) -> int:
     now = clock.now()
     values = {"occurred_at": now, "follow_up_done": False} | {k: v for k, v in fields.items() if v is not None}
-    return conn.execute(insert(activities).values(**values, created_at=now, updated_at=now)).inserted_primary_key[0]
+    return insert_id(conn, insert(activities).values(**values, created_at=now, updated_at=now))
 
 
 def add_stage_change(
@@ -151,7 +151,7 @@ def _linked(contact_ids: Iterable[int], deal_ids: Iterable[int]):
 
 def count_linked(conn: Connection, contact_ids: Iterable[int], deal_ids: Iterable[int]) -> int:
     """Activities linked to any of these contacts or deals."""
-    return conn.scalar(select(func.count()).select_from(activities).where(_linked(contact_ids, deal_ids)))
+    return count(conn, select(func.count()).select_from(activities).where(_linked(contact_ids, deal_ids)))
 
 
 def delete_linked(conn: Connection, contact_ids: Iterable[int], deal_ids: Iterable[int]) -> None:

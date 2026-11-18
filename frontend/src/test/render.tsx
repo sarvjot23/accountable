@@ -31,7 +31,10 @@ export function mockApi(routes: Record<string, Handler | unknown>) {
     try {
       const body = init.body ? JSON.parse(String(init.body)) : undefined;
       const result = typeof route === 'function' ? await (route as Handler)(body, init) : route;
-      return new Response(JSON.stringify(result ?? null), { status: 200, headers: { 'Content-Type': 'application/json' } });
+      return new Response(JSON.stringify(result ?? null), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
     } catch (e) {
       return new Response(JSON.stringify({ detail: (e as Error).message }), { status: 422 });
     }

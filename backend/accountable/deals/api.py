@@ -114,7 +114,7 @@ def _get_or_404(conn: Connection, deal_id: int) -> dict:
 
 
 def _check_links(conn: Connection, body: DealIn) -> None:
-    if not organizations_data.exists(conn, body.organization_id):
+    if body.organization_id is None or not organizations_data.exists(conn, body.organization_id):
         raise HTTPException(422, "That organization doesn't exist")
     if body.contact_id is not None and not contacts_data.exists(conn, body.contact_id):
         raise HTTPException(422, "That contact doesn't exist")
@@ -128,7 +128,7 @@ def list_deals(conn: Conn):
 @router.post("/deals", response_model=DealOut, status_code=201)
 def create_deal(body: DealIn, conn: Conn):
     _check_links(conn, body)
-    return deal_out(data.get(conn, data.create(conn, body.model_dump())))
+    return deal_out(_get_or_404(conn, data.create(conn, body.model_dump())))
 
 
 @router.get("/deals/{deal_id}", response_model=DealOut)
@@ -144,7 +144,7 @@ def update_deal(deal_id: int, body: DealIn, conn: Conn):
     if submitted["probability"] is None:
         del submitted["probability"]
     data.edit(conn, current, submitted)
-    return deal_out(data.get(conn, deal_id))
+    return deal_out(_get_or_404(conn, deal_id))
 
 
 @router.patch("/deals/{deal_id}/move", response_model=DealOut)
@@ -154,7 +154,7 @@ def move_deal(deal_id: int, body: MoveIn, conn: Conn):
         data.move(conn, current, body.stage, body.before_id, body.after_id)
     except ValueError:
         raise HTTPException(422, "The board changed while you were moving that card. Refresh and try again.") from None
-    return deal_out(data.get(conn, deal_id))
+    return deal_out(_get_or_404(conn, deal_id))
 
 
 @router.get("/deals/{deal_id}/timeline", response_model=list[ActivityOut])

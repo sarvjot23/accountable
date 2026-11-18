@@ -39,11 +39,7 @@ function Layout() {
 }
 
 function NotFound() {
-  return (
-    <p className={styles.notFound}>
-      There's nothing here. Use the tabs above to find your way back.
-    </p>
-  );
+  return <p className={styles.notFound}>There's nothing here. Use the tabs above to find your way back.</p>;
 }
 
 const router = createBrowserRouter([

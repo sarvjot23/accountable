@@ -73,7 +73,12 @@ export function OrganizationPage() {
                   title="Contacts"
                   sub={plural(org.contacts.length, 'contact')}
                   actions={
-                    <Button size="small" variant="light" className={recordStyles.soft} onClick={() => setAddingContact(true)}>
+                    <Button
+                      size="small"
+                      variant="light"
+                      className={recordStyles.soft}
+                      onClick={() => setAddingContact(true)}
+                    >
                       <Plus aria-hidden /> Add contact
                     </Button>
                   }
@@ -100,7 +105,12 @@ export function OrganizationPage() {
                   title="Deals"
                   sub={plural(org.deals.length, 'deal')}
                   actions={
-                    <Button size="small" variant="light" className={recordStyles.soft} onClick={() => setAddingDeal(true)}>
+                    <Button
+                      size="small"
+                      variant="light"
+                      className={recordStyles.soft}
+                      onClick={() => setAddingDeal(true)}
+                    >
                       <Plus aria-hidden /> Add deal
                     </Button>
                   }

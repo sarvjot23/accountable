@@ -25,7 +25,17 @@ export default defineConfig({
     include: ['src/**/*.test.{ts,tsx}'],
     setupFiles: ['./src/test/setup.ts'],
     css: { modules: { classNameStrategy: 'non-scoped' } },
+    // Multi-step page tests can pass 5 seconds when the whole suite runs with coverage.
+    testTimeout: 20_000,
     restoreMocks: true,
     unstubGlobals: true,
+    // Unit test coverage must stay at 80% or more.
+    coverage: {
+      provider: 'v8',
+      include: ['src/**/*.{ts,tsx}'],
+      exclude: ['src/**/*.test.{ts,tsx}', 'src/test/**', 'src/lib/api-types.ts', 'src/main.tsx'],
+      reporter: ['text-summary'],
+      thresholds: { statements: 80, branches: 80, functions: 80, lines: 80 },
+    },
   },
 });

@@ -26,7 +26,14 @@ def get(client, path):
 def test_six_organizations_across_industries(seeded):  # SEED-2
     orgs = get(seeded, "/api/organizations")
     assert len(orgs) == 6
-    assert {o["industry"] for o in orgs} == {"Healthcare", "Logistics", "Retail", "Finance", "Manufacturing", "Education"}
+    assert {o["industry"] for o in orgs} == {
+        "Healthcare",
+        "Logistics",
+        "Retail",
+        "Finance",
+        "Manufacturing",
+        "Education",
+    }
 
 
 def test_fifteen_contacts_at_every_status(seeded):  # SEED-3

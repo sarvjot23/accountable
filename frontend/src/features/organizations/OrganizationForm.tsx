@@ -98,13 +98,23 @@ function OrganizationForm({
           </p>
         )}
         <Field label="Name" htmlFor="org-name" error={errors.name?.message}>
-          <TextInput id="org-name" autoFocus aria-invalid={!!errors.name} {...register('name')} />
+          <TextInput id="org-name" data-autofocus aria-invalid={!!errors.name} {...register('name')} />
         </Field>
         <Field label="Website" htmlFor="org-website" error={errors.website?.message}>
-          <TextInput id="org-website" placeholder="northwind.com" aria-invalid={!!errors.website} {...register('website')} />
+          <TextInput
+            id="org-website"
+            placeholder="northwind.com"
+            aria-invalid={!!errors.website}
+            {...register('website')}
+          />
         </Field>
         <Field label="Industry" htmlFor="org-industry" error={errors.industry?.message}>
-          <TextInput id="org-industry" list="org-industries" aria-invalid={!!errors.industry} {...register('industry')} />
+          <TextInput
+            id="org-industry"
+            list="org-industries"
+            aria-invalid={!!errors.industry}
+            {...register('industry')}
+          />
           <datalist id="org-industries">
             {industries.map((industry) => (
               <option key={industry} value={industry!} />

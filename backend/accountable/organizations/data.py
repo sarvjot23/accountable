@@ -6,7 +6,7 @@ from sqlalchemy.engine import Connection
 from accountable import clock
 from accountable.activities import data as activities_data
 from accountable.contacts import data as contacts_data
-from accountable.db import UtcDateTime, metadata
+from accountable.db import UtcDateTime, insert_id, metadata
 from accountable.deals import data as deals_data
 
 organizations = Table(
@@ -28,7 +28,10 @@ def _with_summary(conn: Connection, rows) -> list[dict]:
     out = []
     for row in rows:
         count, value = open_deals.get(row["id"], (0, 0))
-        out.append(dict(row) | {"contacts_count": contact_counts.get(row["id"], 0), "open_deals_count": count, "open_value": value})
+        out.append(
+            dict(row)
+            | {"contacts_count": contact_counts.get(row["id"], 0), "open_deals_count": count, "open_value": value}
+        )
     return out
 
 
@@ -48,8 +51,7 @@ def exists(conn: Connection, organization_id: int) -> bool:
 
 def create(conn: Connection, fields: dict) -> int:
     now = clock.now()
-    result = conn.execute(insert(organizations).values(**fields, created_at=now, updated_at=now))
-    return result.inserted_primary_key[0]
+    return insert_id(conn, insert(organizations).values(**fields, created_at=now, updated_at=now))
 
 
 def update_one(conn: Connection, organization_id: int, fields: dict) -> None:

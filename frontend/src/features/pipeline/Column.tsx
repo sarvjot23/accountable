@@ -12,7 +12,15 @@ import styles from './Pipeline.module.css';
 const CLOSED_SHOWN = 4;
 
 /** One stage column: its header panel (PIPE-3, PIPE-4), its cards, and "+" to add a deal there (PIPE-13). */
-export function Column({ stageKey, deals, onAdd }: { stageKey: StageKey; deals: Deal[]; onAdd: (stage: StageKey) => void }) {
+export function Column({
+  stageKey,
+  deals,
+  onAdd,
+}: {
+  stageKey: StageKey;
+  deals: Deal[];
+  onAdd: (stage: StageKey) => void;
+}) {
   const s = stageOf(stageKey);
   const { setNodeRef, isOver } = useDroppable({ id: stageKey });
   const [showAll, setShowAll] = useState(false);
@@ -25,7 +33,11 @@ export function Column({ stageKey, deals, onAdd }: { stageKey: StageKey; deals: 
     <section className={styles.column} aria-labelledby={headingId} data-stage={stageKey}>
       <header className={styles.colHead}>
         <div className={styles.colTop}>
-          <h2 id={headingId} className={styles.stagePill} style={{ background: chipColor(stageKey), color: s.textColor }}>
+          <h2
+            id={headingId}
+            className={styles.stagePill}
+            style={{ background: chipColor(stageKey), color: s.textColor }}
+          >
             {s.label}
           </h2>
           <span className={styles.count} aria-label={plural(totals.count, 'deal')}>
@@ -52,7 +64,12 @@ export function Column({ stageKey, deals, onAdd }: { stageKey: StageKey; deals: 
           {hidden} more {s.key === 'won' ? 'won' : 'lost'} {hidden === 1 ? 'deal' : 'deals'}
         </button>
       )}
-      <button type="button" className={styles.add} onClick={() => onAdd(stageKey)} aria-label={`Add deal in ${s.label}`}>
+      <button
+        type="button"
+        className={styles.add}
+        onClick={() => onAdd(stageKey)}
+        aria-label={`Add deal in ${s.label}`}
+      >
         <Plus aria-hidden /> Add deal
       </button>
     </section>

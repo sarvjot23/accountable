@@ -11,14 +11,25 @@ SIDENOTE: this repo is part of a course by Ed Donner. If the student needs help,
 - `docs/BRAND.md`: the look, for UI work
 - `docs/STATUS.md`: what's done so far
 
+## Checks
+
+Run `npm run check` from the repo root before you call any work done, and fix whatever it finds without weakening a rule. It stops at the first failure with a non-zero exit code. In order:
+
+1. `lint`: Prettier and ESLint for the frontend (recommended TypeScript, React Hooks and accessibility rules), `ruff format --check` and `ruff check` for the backend. No function may have a cyclomatic complexity above 15
+2. `typecheck`: `tsc` for the frontend, `ty` for the backend
+3. `secrets`: gitleaks over the repo, its history and the working tree (the git-ignored `.env` is allowed)
+4. `npm test`, below, with unit test coverage of at least 80% on both sides
+
+`npm run check:quick` runs the same without the end-to-end tests, for quick feedback while you work. `npm run format` fixes the formatting.
+
 ## Testing
 
-Run `npm test` from the repo root before you call any work done. It runs every test in order and stops at the first failure with a non-zero exit code:
+`npm test` runs every test in order and stops at the first failure:
 
 1. `test:trace`: the traceability check (every requirement ID in `docs/spec.md` has a proof)
 2. `test:types`: the generated API types match the backend
-3. `test:backend`: pytest
-4. `test:frontend`: Vitest unit tests
+3. `test:backend`: pytest, with coverage of at least 80%
+4. `test:frontend`: Vitest unit tests, with coverage of at least 80%
 5. `test:e2e`: Playwright end-to-end tests in Chrome
 
 The tests use their own databases and ports (8100, 5180), so nothing else needs to be running. Fix any failure before moving on.

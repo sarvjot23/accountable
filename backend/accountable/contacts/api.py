@@ -62,7 +62,7 @@ class ContactIn(BaseModel):
     @field_validator("last_name", "phone", "job_title")
     @classmethod
     def _optional_text(cls, v: str | None, info: ValidationInfo) -> str | None:
-        label, size = _OPTIONAL_LIMITS[info.field_name]
+        label, size = _OPTIONAL_LIMITS[str(info.field_name)]
         return _limit(label, size)(v)
 
 

@@ -22,7 +22,7 @@ from sqlalchemy.engine import Connection
 from accountable import clock
 from accountable.activities import data as activities_data
 from accountable.contacts import data as contacts_data
-from accountable.db import UtcDateTime, metadata
+from accountable.db import UtcDateTime, count, insert_id, metadata
 from accountable.deals import rules
 from accountable.deals.stages import OPEN_STAGES
 from accountable.organizations import data as organizations_data
@@ -108,7 +108,7 @@ def create(conn: Connection, fields: Mapping) -> int:
         "created_at": now,
         "updated_at": now,
     }
-    return conn.execute(insert(deals).values(**values)).inserted_primary_key[0]
+    return insert_id(conn, insert(deals).values(**values))
 
 
 def _save(conn: Connection, deal_id: int, changes: Mapping) -> None:
@@ -159,7 +159,7 @@ def open_summary_by_organization(conn: Connection) -> dict[int, tuple[int, int]]
         .where(deals.c.stage.in_(OPEN_STAGES))
         .group_by(deals.c.organization_id)
     )
-    return {org_id: (count, value) for org_id, count, value in conn.execute(query)}
+    return {org_id: (open_count, value) for org_id, open_count, value in conn.execute(query)}
 
 
 def ids_for_organization(conn: Connection, organization_id: int) -> list[int]:
@@ -167,7 +167,7 @@ def ids_for_organization(conn: Connection, organization_id: int) -> list[int]:
 
 
 def count_for_contact(conn: Connection, contact_id: int) -> int:
-    return conn.scalar(select(func.count()).select_from(deals).where(deals.c.contact_id == contact_id))
+    return count(conn, select(func.count()).select_from(deals).where(deals.c.contact_id == contact_id))
 
 
 def delete_impact(conn: Connection, deal_id: int) -> dict:

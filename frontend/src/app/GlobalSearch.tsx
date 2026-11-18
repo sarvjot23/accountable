@@ -22,9 +22,27 @@ export function GlobalSearch() {
   const q = text.trim().toLowerCase();
   const match = (name: string) => q.length > 0 && name.toLowerCase().includes(q);
   const groups = [
-    { heading: 'Deals', icon: Handshake, items: deals.filter((d) => match(d.name)).map((d) => ({ name: d.name, hint: d.organization_name, to: `/deals/${d.id}` })) },
-    { heading: 'Contacts', icon: User, items: contacts.filter((c) => match(c.name)).map((c) => ({ name: c.name, hint: c.organization_name, to: `/contacts/${c.id}` })) },
-    { heading: 'Organizations', icon: Building2, items: organizations.filter((o) => match(o.name)).map((o) => ({ name: o.name, hint: o.industry, to: `/organizations/${o.id}` })) },
+    {
+      heading: 'Deals',
+      icon: Handshake,
+      items: deals
+        .filter((d) => match(d.name))
+        .map((d) => ({ name: d.name, hint: d.organization_name, to: `/deals/${d.id}` })),
+    },
+    {
+      heading: 'Contacts',
+      icon: User,
+      items: contacts
+        .filter((c) => match(c.name))
+        .map((c) => ({ name: c.name, hint: c.organization_name, to: `/contacts/${c.id}` })),
+    },
+    {
+      heading: 'Organizations',
+      icon: Building2,
+      items: organizations
+        .filter((o) => match(o.name))
+        .map((o) => ({ name: o.name, hint: o.industry, to: `/organizations/${o.id}` })),
+    },
   ];
   const showing = open && q.length > 0;
 
@@ -61,8 +79,8 @@ export function GlobalSearch() {
           className={styles.input}
         />
       </div>
-      {/* Always in the page, so the input's aria-controls points at something; hidden until there's text. */}
-      <div className={styles.results} hidden={!showing} onMouseDown={(e) => e.preventDefault()}>
+      {/* Always in the page, so the input's aria-controls points at something; hidden until there's text. Pressing on a result mustn't blur the input before the click lands. */}
+      <div className={styles.results} hidden={!showing} role="presentation" onMouseDown={(e) => e.preventDefault()}>
         <Command.List className={styles.list}>
           {showing && <Command.Empty className={styles.empty}>Nothing found for “{text.trim()}”</Command.Empty>}
           {groups.map(

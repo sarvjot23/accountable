@@ -7,6 +7,7 @@ never touch backend/data/accountable.db (APP-7).
 import os
 import shutil
 import tempfile
+from collections.abc import Iterator
 from datetime import UTC, date, datetime
 from pathlib import Path
 
@@ -15,7 +16,7 @@ import pytest
 _SESSION_DIR = Path(tempfile.mkdtemp(prefix="accountable-tests-"))
 os.environ["ACCOUNTABLE_DB"] = str(_SESSION_DIR / "session.db")
 
-from accountable import clock, db  # noqa: E402
+from accountable import clock, db
 
 TODAY = date(2026, 11, 17)
 NOW = datetime(2026, 11, 17, 15, 30, tzinfo=UTC)
@@ -36,7 +37,7 @@ def migrated_template() -> Path:
 
 
 @pytest.fixture
-def db_path(tmp_path, monkeypatch) -> Path:
+def db_path(tmp_path, monkeypatch) -> Iterator[Path]:
     """A fresh, migrated, empty database for this test."""
     template = migrated_template()
     path = tmp_path / "test.db"

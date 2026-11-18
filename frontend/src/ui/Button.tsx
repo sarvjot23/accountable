@@ -19,8 +19,3 @@ export function Button({ variant = 'light', size = 'normal', className, type = '
     />
   );
 }
-
-/** The same look for a link styled as a button. */
-export function buttonClass(variant: Variant = 'light', size: 'normal' | 'small' = 'normal') {
-  return cx(styles.button, styles[variant], size === 'small' && styles.small);
-}

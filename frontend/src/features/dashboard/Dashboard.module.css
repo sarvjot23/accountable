@@ -199,13 +199,6 @@
   padding: 0;
 }
 
-/* Fifteen recent activities scroll inside their panel, so the row keeps the mockup's height. */
-.scrolling {
-  max-height: 400px;
-  overflow-y: auto;
-  padding-right: 6px;
-}
-
 .row {
   display: flex;
   gap: 12px;

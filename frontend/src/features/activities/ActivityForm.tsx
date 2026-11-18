@@ -59,6 +59,28 @@ export function ActivitySheet({
   );
 }
 
+/** The form's starting values: the activity's, or a note from now with any preset links. */
+function startingValues(activity?: Activity, preset?: ActivityPreset): ActivityValues {
+  if (!activity) {
+    return {
+      type: 'note',
+      description: '',
+      occurred_at: local(new Date().toISOString()),
+      contact_id: preset?.contact_id ?? null,
+      deal_id: preset?.deal_id ?? null,
+      follow_up_date: '',
+    };
+  }
+  return {
+    type: activity.type === 'stage_change' ? 'note' : activity.type,
+    description: activity.description,
+    occurred_at: local(activity.occurred_at),
+    contact_id: activity.contact_id,
+    deal_id: activity.deal_id,
+    follow_up_date: activity.follow_up_date ?? '',
+  };
+}
+
 export function ActivityForm({
   activity,
   preset,
@@ -82,14 +104,7 @@ export function ActivityForm({
   } = useForm<ActivityValues>({
     // A stage-change entry keeps its links, so only the other kinds are checked for one.
     resolver: zodResolver(stageChange ? fields : linked),
-    defaultValues: {
-      type: activity && activity.type !== 'stage_change' ? activity.type : 'note',
-      description: activity?.description ?? '',
-      occurred_at: local(activity?.occurred_at ?? new Date().toISOString()),
-      contact_id: activity ? activity.contact_id : (preset?.contact_id ?? null),
-      deal_id: activity ? activity.deal_id : (preset?.deal_id ?? null),
-      follow_up_date: activity?.follow_up_date ?? '',
-    },
+    defaultValues: startingValues(activity, preset),
   });
 
   async function submit(values: ActivityValues) {
@@ -145,7 +160,7 @@ export function ActivityForm({
         <Field label="Description" htmlFor="activity-description" error={errors.description?.message}>
           <TextArea
             id="activity-description"
-            autoFocus
+            data-autofocus
             rows={4}
             aria-invalid={!!errors.description}
             {...register('description')}
@@ -189,7 +204,11 @@ export function ActivityForm({
                 )}
               />
             </Field>
-            <Field label="Follow-up date" htmlFor="activity-follow-up" hint="Optional. It shows on the dashboard until it's done.">
+            <Field
+              label="Follow-up date"
+              htmlFor="activity-follow-up"
+              hint="Optional. It shows on the dashboard until it's done."
+            >
               <TextInput id="activity-follow-up" type="date" {...register('follow_up_date')} />
             </Field>
           </>

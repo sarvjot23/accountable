@@ -110,7 +110,9 @@ def test_move_across_columns_writes_one_stage_change_entry(client, deal, org_id)
 
 def test_move_within_a_column_changes_only_the_position(client, deal, org_id):  # PIPE-16 API-5
     a, b, c = (deal(organization_id=org_id, name=n, stage="new") for n in "abc")
-    response = client.patch(f"/api/deals/{c['id']}/move", json={"stage": "new", "before_id": a["id"], "after_id": b["id"]})
+    response = client.patch(
+        f"/api/deals/{c['id']}/move", json={"stage": "new", "before_id": a["id"], "after_id": b["id"]}
+    )
     body = response.json()
     assert body["stage"] == "new" and body["probability"] == 10
     assert a["position"] < body["position"] < b["position"]

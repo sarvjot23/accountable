@@ -60,7 +60,15 @@ export function PrefixInput({ prefix, className, ...rest }: ComponentProps<'inpu
 }
 
 /** The form's footer: Save and Cancel, Save disabled while saving (FORM-1). */
-export function FormButtons({ saving, onCancel, saveLabel = 'Save' }: { saving: boolean; onCancel: () => void; saveLabel?: string }) {
+export function FormButtons({
+  saving,
+  onCancel,
+  saveLabel = 'Save',
+}: {
+  saving: boolean;
+  onCancel: () => void;
+  saveLabel?: string;
+}) {
   return (
     <div className={styles.buttons}>
       <button type="button" className={styles.cancel} onClick={onCancel}>

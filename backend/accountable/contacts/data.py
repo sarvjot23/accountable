@@ -5,7 +5,7 @@ from sqlalchemy.engine import Connection
 
 from accountable import clock
 from accountable.activities import data as activities_data
-from accountable.db import UtcDateTime, metadata
+from accountable.db import UtcDateTime, insert_id, metadata
 from accountable.deals import data as deals_data
 from accountable.organizations import data as organizations_data
 
@@ -65,8 +65,7 @@ def exists(conn: Connection, contact_id: int) -> bool:
 
 def create(conn: Connection, fields: dict) -> int:
     now = clock.now()
-    result = conn.execute(insert(contacts).values(**fields, created_at=now, updated_at=now))
-    return result.inserted_primary_key[0]
+    return insert_id(conn, insert(contacts).values(**fields, created_at=now, updated_at=now))
 
 
 def update_one(conn: Connection, contact_id: int, fields: dict) -> None:

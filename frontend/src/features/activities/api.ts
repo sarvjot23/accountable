@@ -43,7 +43,8 @@ export function useDeleteActivity() {
 export function useMarkDone() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, done }: { id: number; done: boolean }) => api.patch<Activity>(`/activities/${id}/done`, { done }),
+    mutationFn: ({ id, done }: { id: number; done: boolean }) =>
+      api.patch<Activity>(`/activities/${id}/done`, { done }),
     onSuccess: () => refreshAll(queryClient),
   });
 }

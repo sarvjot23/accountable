@@ -66,7 +66,7 @@ export function ContactsPage() {
     <>
       <PageHeader
         title="Contacts"
-        summary={`${plural(contacts.length, 'contact')}: ${count('lead')} leads, ${count('qualified')} qualified, ${plural(count('customer'), 'customer')}`}
+        summary={`${plural(contacts.length, 'contact')}: ${plural(count('lead'), 'lead')}, ${count('qualified')} qualified, ${plural(count('customer'), 'customer')}`}
         actions={add}
       />
       <PageState query={query}>

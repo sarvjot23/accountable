@@ -10,7 +10,14 @@ import { Panel } from '../../ui/Panel';
 import { PageState } from '../../ui/PageState';
 import { RowMenu } from '../../ui/RowMenu';
 import { useToast } from '../../ui/Toast';
-import { TYPE_LABELS, useDeleteActivity, useTimeline, type Activity, type ActivityType, type TimelineKind } from './api';
+import {
+  TYPE_LABELS,
+  useDeleteActivity,
+  useTimeline,
+  type Activity,
+  type ActivityType,
+  type TimelineKind,
+} from './api';
 import { ActivitySheet, type ActivityPreset } from './ActivityForm';
 import styles from './Activities.module.css';
 import { DoneCheck } from './DoneCheck';
@@ -106,12 +113,19 @@ function TimelineEntry({
           <span className={styles.when}>{dateTime(entry.occurred_at)}</span>
           {/* The other linked record: the deal on a contact's timeline, the contact on a deal's. */}
           {kind === 'contacts' && entry.deal_id && <Link to={`/deals/${entry.deal_id}`}>{entry.deal_name}</Link>}
-          {kind === 'deals' && entry.contact_id && <Link to={`/contacts/${entry.contact_id}`}>{entry.contact_name}</Link>}
+          {kind === 'deals' && entry.contact_id && (
+            <Link to={`/contacts/${entry.contact_id}`}>{entry.contact_name}</Link>
+          )}
         </p>
         {entry.follow_up_date && (
           <div className={styles.followUp}>
             <DoneCheck activity={entry} />
-            <span className={cx(entry.follow_up_done && styles.doneText, entry.follow_up_status === 'overdue' && styles.overdue)}>
+            <span
+              className={cx(
+                entry.follow_up_done && styles.doneText,
+                entry.follow_up_status === 'overdue' && styles.overdue,
+              )}
+            >
               Follow up <span className={styles.followUpDate}>{date(entry.follow_up_date)}</span>
               {entry.follow_up_status === 'overdue' && ' · overdue'}
               {entry.follow_up_status === 'today' && ' · today'}

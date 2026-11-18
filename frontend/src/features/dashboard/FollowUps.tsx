@@ -28,7 +28,9 @@ export function FollowUps({ followUps }: { followUps: Dashboard['follow_ups'] })
               <DoneCheck activity={item} />
               <div className={styles.rowText}>
                 <p className={styles.rowTitle}>{item.description}</p>
-                <p className={styles.rowSub}>{to ? <Link to={to}>{who || 'Open the record'}</Link> : 'No longer linked'}</p>
+                <p className={styles.rowSub}>
+                  {to ? <Link to={to}>{who || 'Open the record'}</Link> : 'No longer linked'}
+                </p>
               </div>
               <span className={cx(styles.rowDate, overdue && styles.overdueDate)}>
                 {item.follow_up_status === 'today' ? 'Today' : shortDate(item.follow_up_date!)}

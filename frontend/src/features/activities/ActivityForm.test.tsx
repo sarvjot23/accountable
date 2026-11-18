@@ -4,11 +4,12 @@ import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import { activity, contact, deal } from '../../test/fixtures';
 import { mockApi, renderWithApp } from '../../test/render';
+import type { Activity } from './api';
 import { ActivityForm } from './ActivityForm';
 
 function setup(props: Partial<Parameters<typeof ActivityForm>[0]> = {}) {
-  const saved: any[] = [];
-  const save = (body: any) => {
+  const saved: Partial<Activity>[] = [];
+  const save = (body: Partial<Activity>) => {
     saved.push(body);
     return activity(body);
   };

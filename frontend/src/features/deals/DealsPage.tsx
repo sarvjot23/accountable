@@ -54,7 +54,11 @@ const columns = [
     cell: (info) => <StageChip stage={info.row.original.stage} />,
   }),
   column.accessor('value', { header: 'Value', meta: { numeric: true }, cell: (info) => money(info.getValue()) }),
-  column.accessor('probability', { header: 'Probability', meta: { numeric: true }, cell: (info) => percent(info.getValue()) }),
+  column.accessor('probability', {
+    header: 'Probability',
+    meta: { numeric: true },
+    cell: (info) => percent(info.getValue()),
+  }),
   column.accessor('expected_revenue', {
     header: 'Expected revenue',
     meta: { numeric: true },
@@ -90,8 +94,7 @@ export function DealsPage() {
 
   const shown = deals.filter(
     (d) =>
-      (stageFilter === 'all' ||
-        (stageFilter === 'open' ? OPEN_STAGES.includes(d.stage) : d.stage === stageFilter)) &&
+      (stageFilter === 'all' || (stageFilter === 'open' ? OPEN_STAGES.includes(d.stage) : d.stage === stageFilter)) &&
       (!lateOnly || d.is_late),
   );
   const openDeals = deals.filter((d) => OPEN_STAGES.includes(d.stage));
@@ -160,7 +163,11 @@ export function DealsPage() {
           }
         />
       </PageState>
-      <DealSheet open={editing !== undefined} onOpenChange={(open) => !open && setEditing(undefined)} deal={editing ?? undefined} />
+      <DealSheet
+        open={editing !== undefined}
+        onOpenChange={(open) => !open && setEditing(undefined)}
+        deal={editing ?? undefined}
+      />
       <DeleteDeal deal={deleting} onOpenChange={(open) => !open && setDeleting(null)} />
     </>
   );

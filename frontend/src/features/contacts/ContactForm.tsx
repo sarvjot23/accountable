@@ -45,6 +45,23 @@ export function ContactSheet({
   );
 }
 
+/** The form's starting values: the contact's, or blanks with any preset organization. */
+function startingValues(contact?: Contact, preset?: { organization_id?: number }): Values {
+  if (!contact) {
+    const blank = { first_name: '', last_name: '', email: '', phone: '', job_title: '' };
+    return { ...blank, organization_id: preset?.organization_id ?? null, status: 'lead' };
+  }
+  return {
+    first_name: contact.first_name,
+    last_name: contact.last_name ?? '',
+    email: contact.email ?? '',
+    phone: contact.phone ?? '',
+    job_title: contact.job_title ?? '',
+    organization_id: contact.organization_id,
+    status: contact.status,
+  };
+}
+
 function ContactForm({
   contact,
   preset,
@@ -65,15 +82,7 @@ function ContactForm({
     formState: { errors },
   } = useForm<Values>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      first_name: contact?.first_name ?? '',
-      last_name: contact?.last_name ?? '',
-      email: contact?.email ?? '',
-      phone: contact?.phone ?? '',
-      job_title: contact?.job_title ?? '',
-      organization_id: contact ? contact.organization_id : (preset?.organization_id ?? null),
-      status: contact?.status ?? 'lead',
-    },
+    defaultValues: startingValues(contact, preset),
   });
 
   async function submit(values: Values) {
@@ -106,7 +115,12 @@ function ContactForm({
         )}
         <div className={formStyles.row}>
           <Field label="First name" htmlFor="contact-first" error={errors.first_name?.message}>
-            <TextInput id="contact-first" autoFocus aria-invalid={!!errors.first_name} {...register('first_name')} />
+            <TextInput
+              id="contact-first"
+              data-autofocus
+              aria-invalid={!!errors.first_name}
+              {...register('first_name')}
+            />
           </Field>
           <Field label="Last name" htmlFor="contact-last" error={errors.last_name?.message}>
             <TextInput id="contact-last" aria-invalid={!!errors.last_name} {...register('last_name')} />

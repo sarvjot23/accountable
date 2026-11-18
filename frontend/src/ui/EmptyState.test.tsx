@@ -26,7 +26,12 @@ describe('empty states (DASH-15)', () => {
   });
 
   it.each([
-    ['organizations', <OrganizationsPage />, 'No organizations yet. Add the first company you work with.', 'Add organization'],
+    [
+      'organizations',
+      <OrganizationsPage />,
+      'No organizations yet. Add the first company you work with.',
+      'Add organization',
+    ],
     ['contacts', <ContactsPage />, 'No contacts yet. Add a lead or a customer to get started.', 'Add contact'],
     ['deals', <DealsPage />, "No deals yet. Add the first sale you're working on.", 'Add deal'],
   ])('the %s table says what to add', async (kind, page, message, button) => {

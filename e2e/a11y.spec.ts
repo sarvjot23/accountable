@@ -23,17 +23,23 @@ test('[LOOK-8] axe finds no contrast or labelling problems on any page', async (
   }
 });
 
+/** Wait for open and fade animations to end, so axe measures the final colours. */
+const settled = (page: Page) =>
+  page.evaluate(() => Promise.all(document.getAnimations().map((a) => a.finished)));
+
 test('[LOOK-8] forms and dialogs pass axe too', async ({ page }) => {
   await page.goto('/deals');
   await page.getByRole('button', { name: 'Add deal' }).last().click();
   await page.getByRole('button', { name: 'Save' }).click();
   await expect(page.getByText('Enter a name')).toBeVisible();
+  await settled(page);
   let results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze();
   expect(results.violations.map((v) => v.id)).toEqual([]);
   await page.keyboard.press('Escape');
   await page.getByRole('button', { name: /^Actions for / }).first().click();
   await page.getByRole('menuitem', { name: 'Delete' }).click();
   await expect(page.getByRole('alertdialog')).toBeVisible();
+  await settled(page);
   results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze();
   expect(results.violations.map((v) => v.id)).toEqual([]);
 });
