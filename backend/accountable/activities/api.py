@@ -104,6 +104,9 @@ def update_activity(activity_id: int, body: ActivityIn, conn: Conn):
         changes = fields
         if changes["occurred_at"] is None:
             del changes["occurred_at"]
+        # A new follow-up date is a new task, so it starts as not done (RULE-7).
+        if changes["follow_up_date"] != current["follow_up_date"]:
+            changes["follow_up_done"] = False
     data.update_one(conn, activity_id, changes)
     return data.get(conn, activity_id)
 

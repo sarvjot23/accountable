@@ -49,17 +49,19 @@ def stage_change(deal: Mapping, new_stage: str, today: date, now: datetime) -> d
 
 
 def new_deal(stage_key: str, probability: int | None, close_date: date | None, today: date) -> dict:
-    """A new deal's probability and close date: the stage's usual probability unless one is
-    given (then it's manual), and today as the close date if it's added straight into Won or Lost."""
+    """A new deal's probability and close date (RULE-5): the stage's usual probability unless one
+    is given (then it's manual); a close date given in the form is manual, the same as when it's
+    edited later; with none, today if it's added straight into Won or Lost."""
     target = stage(stage_key)
     manual = probability is not None and probability != target.probability
+    date_manual = close_date is not None
     if not target.open and close_date is None:
         close_date = today
     return {
         "probability": probability if probability is not None else target.probability,
         "probability_manual": manual,
         "close_date": close_date,
-        "close_date_manual": False,
+        "close_date_manual": date_manual,
     }
 
 

@@ -158,7 +158,7 @@ The stage colors follow the brand's order for things side by side: Sea Green, Ma
    - a `stage_change` activity is added, linked to the deal and its main contact, reading "Moved from Proposal to Negotiation".
    Changing the stage in the deal form or on the deal page follows the same rule as dragging.
 4. **[RULE-4] Back from closed.** A deal can move from Won or Lost back to an open stage by RULE-3: its probability goes back to the stage's usual figure and its close date stays as it is until changed by hand.
-5. **[RULE-5] Manual values.** Editing the probability in the deal form sets `probability_manual`. Editing the close date sets `close_date_manual`. A manual probability is kept until the stage changes. A manual close date is kept through stage changes.
+5. **[RULE-5] Manual values.** Editing the probability in the deal form sets `probability_manual`. Entering or editing the close date in the deal form, when adding or editing a deal, sets `close_date_manual`. A manual probability is kept until the stage changes. A manual close date is kept through stage changes.
 6. **[RULE-6] Late.** A deal is late when its stage is open, it has a close date, and that date is before today. Won and Lost deals are never late.
 7. **[RULE-7] Follow-ups.** An activity with a follow-up date and `follow_up_done` false is a task. It is overdue when the date is before today, due today when equal, and upcoming when later.
 8. **[RULE-8] Deleting an organization** deletes its contacts, its deals and every activity linked to any of them. The confirmation names the counts: "Delete Northwind Labs? This also deletes 3 contacts, 2 deals and 11 activities."
@@ -251,7 +251,7 @@ Columns:
 - **[PIPE-6]** A late card has a Raspberry outline and a "Late · 10 Nov" pill in place of the date.
 - **[PIPE-7]** While dragging, the card lifts and tilts slightly, and a striped space shows where it will land.
 - **[PIPE-8]** Dragging a card to another column changes the deal's stage by RULE-3.
-- **[PIPE-9]** A card can be dropped anywhere in a column, including higher or lower in its own column, and it stays exactly there, also after a refresh.
+- **[PIPE-9]** In the open columns (New to Negotiation), a card can be dropped anywhere, including higher or lower in its own column, and it stays exactly there, also after a refresh. Won and Lost keep their order of most recent first (PIPE-4): a card dropped there takes its place by close date.
 - **[PIPE-10]** Cards can be moved with the keyboard as well as the mouse.
 - **[PIPE-11]** The board's and the columns' totals and expected revenue update at once, before the save finishes.
 - **[PIPE-12]** If the save fails, the card goes back and a message explains.

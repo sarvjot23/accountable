@@ -159,6 +159,15 @@ def test_manual_close_date_is_kept_through_a_stage_change():  # RULE-5
     assert changes["close_date_manual"] is True
 
 
+def test_close_date_given_when_adding_is_manual_like_an_edit():  # RULE-5
+    added = rules.new_deal("proposal", None, date(2027, 1, 15), TODAY)
+    assert added["close_date"] == date(2027, 1, 15) and added["close_date_manual"] is True
+    without = rules.new_deal("proposal", None, None, TODAY)
+    assert without["close_date"] is None and without["close_date_manual"] is False
+    straight_to_won = rules.new_deal("won", None, None, TODAY)
+    assert straight_to_won["close_date"] == TODAY and straight_to_won["close_date_manual"] is False
+
+
 def test_probability_set_with_a_stage_change_is_manual():  # RULE-5
     changes, _ = rules.edit_deal(deal(), {"stage": "negotiation", "probability": 80}, TODAY, NOW)
     assert changes["probability"] == 80

@@ -72,6 +72,18 @@ def test_edit_an_activity(client, linked, activity):  # API-7
     assert response.json()["detail"] == "Choose a contact, a deal or both"
 
 
+def test_a_new_follow_up_date_opens_the_task_again(client, linked, activity):  # RULE-7 API-7
+    c, _ = linked
+    a = activity(contact_id=c["id"], follow_up_date="2026-11-12")
+    client.patch(f"/api/activities/{a['id']}/done", json={})
+    payload = {"type": "note", "description": a["description"], "contact_id": c["id"]}
+    same = client.put(f"/api/activities/{a['id']}", json=payload | {"follow_up_date": "2026-11-12"}).json()
+    assert same["follow_up_done"] is True  # an edit that keeps the date leaves it done
+    moved = client.put(f"/api/activities/{a['id']}", json=payload | {"follow_up_date": "2026-11-24"}).json()
+    assert moved["follow_up_done"] is False
+    assert moved["follow_up_status"] == "upcoming"
+
+
 def test_stage_change_entries_can_be_edited_only_in_text_and_time(client, linked):  # API-7 DATA-5
     _, d = linked
     client.patch(f"/api/deals/{d['id']}/move", json={"stage": "qualified"})

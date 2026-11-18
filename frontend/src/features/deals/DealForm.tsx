@@ -103,6 +103,8 @@ export function DealForm({ deal, preset, onDone }: { deal?: Deal; preset?: DealP
     },
   });
   const organizationId = watch('organization_id');
+  // RULE-5: typed in now, or saved by hand before and kept while the stage stays the same.
+  const probabilityByHand = Boolean(dirtyFields.probability) || (deal?.probability_manual === true && watch('stage') === deal.stage);
   const organizationName = organizations.find((o) => o.id === organizationId)?.name;
 
   async function submit(values: Values) {
@@ -196,7 +198,7 @@ export function DealForm({ deal, preset, onDone }: { deal?: Deal; preset?: DealP
             label="Probability (%)"
             htmlFor="deal-probability"
             error={errors.probability?.message}
-            hint={dirtyFields.probability ? 'Set by hand' : 'The stage’s usual figure'}
+            hint={probabilityByHand ? 'Set by hand' : 'The stage’s usual figure'}
           >
             <TextInput
               id="deal-probability"

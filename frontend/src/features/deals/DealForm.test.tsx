@@ -83,6 +83,15 @@ describe('DealForm', () => {
     expect(screen.getByLabelText('Probability (%)')).toHaveValue('75');
   });
 
+  it('[RULE-5] says a probability saved by hand earlier was set by hand, until the stage changes', async () => {
+    setup({ onDone: vi.fn(), deal: deal({ id: 1, stage: 'proposal', probability: 60, probability_manual: true }) });
+    expect(screen.getByText('Set by hand')).toBeInTheDocument();
+    await userEvent.click(screen.getByRole('combobox', { name: 'Stage' }));
+    await userEvent.click(await screen.findByRole('option', { name: 'Negotiation' }));
+    expect(screen.getByLabelText('Probability (%)')).toHaveValue('75');
+    expect(screen.getByText('The stage’s usual figure')).toBeInTheDocument();
+  });
+
   it('[FORM-3] lists the chosen organization’s contacts first', async () => {
     const options = contactOptions(people, 1, 'Northwind Labs');
     expect(options.map((o) => [o.label, o.group])).toEqual([
