@@ -16,7 +16,8 @@ export default defineConfig({
   retries: 0,
   timeout: 45_000,
   expect: { timeout: 8_000 },
-  reporter: [['list']],
+  // In CI, also write an HTML report (playwright-report/), which the workflow uploads if the run fails.
+  reporter: process.env.CI ? [['list'], ['html', { open: 'never' }]] : [['list']],
   use: {
     baseURL: `http://localhost:${WEB_PORT}`,
     channel: 'chrome',
