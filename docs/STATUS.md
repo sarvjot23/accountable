@@ -71,3 +71,4 @@ This writes `frontend/src/lib/api-types.ts` from the backend's OpenAPI schema. `
   - The deal form said "The stage's usual figure" for a probability saved by hand earlier. It now says "Set by hand" until the stage is changed (`DealForm.tsx`).
   - PIPE-9 (a card stays exactly where it's dropped) conflicted with PIPE-4 (Won and Lost most recent first). The spec now limits PIPE-9 to the open columns; Won and Lost keep their date order, as the board already did.
   Each fix has a test (pytest for the first two, Vitest for the third).
+- 2026-11-18: Screenshots of the dashboard, pipeline and a deal page are in `docs/screenshots/`, linked from the community contributions PR (ed-donner/accountable#10).
